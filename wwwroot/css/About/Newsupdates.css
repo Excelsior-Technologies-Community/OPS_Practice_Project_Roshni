@@ -1,0 +1,125 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.news-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: bold;
+    position: relative;
+}
+
+    .section-title::after {
+        content: '';
+        width: 60px;
+        height: 3px;
+        background-color: #3498db;
+        display: block;
+        margin: 10px auto 0;
+        border-radius: 2px;
+    }
+
+/* Product Item Container */
+.news-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+    .news-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+/* Product Content (Left Side) */
+.news-content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+    .news-content h2 {
+        font-size: 1.5rem;
+        color: #333;
+        margin: 0 0 10px;
+    }
+
+    .news-content p {
+        font-size: 1rem;
+        color: #555;
+        margin: 5px 0;
+    }
+
+.price {
+    font-size: 1.2rem;
+    color: #e74c3c;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Buy Now Button */
+.buy-now {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 15px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+    .buy-now:hover {
+        background-color: #2980b9;
+    }
+
+/* Product Image (Right Side) */
+.news-img {
+    max-width: 200px;
+    flex-shrink: 0;
+}
+
+    .news-img img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+
+.news-item:hover .news-img img {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .news-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .news-content {
+        padding-right: 0;
+    }
+
+    .news-img {
+        margin-top: 20px;
+        max-width: 100%;
+    }
+}

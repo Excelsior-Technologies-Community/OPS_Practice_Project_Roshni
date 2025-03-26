@@ -1,0 +1,47 @@
+﻿@model OPS_Practice_Project.Models.ProductModel
+@{
+    ViewData["Title"] = "View Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Product Details</h2>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Product Name:</th>
+            <td>@Model.ProductName</td>
+        </tr>
+        <tr>
+            <th>Price:</th>
+            <td>@Model.Price.ToString("C")</td>
+        </tr>
+        <tr>
+            <th>Stock Quantity:</th>
+            <td>@Model.Stock</td>
+        </tr>
+        <tr>
+            <th>Category:</th>
+            <td>@Model.CategoryId</td>
+        </tr>
+        <tr>
+            <th>Description:</th>
+            <td>@Model.Description</td>
+        </tr>
+        <tr>
+            <th>Product Image:</th>
+            <td>
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="Product Image" class="img-thumbnail" style="width:150px;height:150px;" />
+                }
+                else
+                {
+                    <span>No image available</span>
+                }
+            </td>
+        </tr>
+    </table>
+
+    <a asp-action="ProductDataTable" asp-controller="Admin" class="btn btn-secondary">Back to List</a>
+</div>

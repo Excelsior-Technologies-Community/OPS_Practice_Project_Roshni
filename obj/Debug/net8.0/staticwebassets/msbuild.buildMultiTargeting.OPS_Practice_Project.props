@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\OPS_Practice_Project.props" />
+</Project>

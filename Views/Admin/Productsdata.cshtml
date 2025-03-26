@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Products List";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/css/Products.css" rel="stylesheet" />
+
+<h2>Product List</h2>
+
+<!-- Filters Section -->
+<div class="filter-container">
+    <label for="categoryDropdown"><strong>Filter by Category:</strong></label>
+    <select id="categoryDropdown">
+        <option value="0">All Categories</option>
+    </select>
+
+    <label for="sortPriceDropdown"><strong>Sort by Price:</strong></label>
+    <select id="sortPriceDropdown">
+        <option value="">Select</option>
+        <option value="low">Low to High</option>
+        <option value="high">High to Low</option>
+    </select>
+
+    <label for="sortTitleDropdown"><strong>Sort by Product Title:</strong></label>
+    <select id="sortTitleDropdown">
+        <option value="">Select</option>
+        <option value="a-z">A to Z</option>
+        <option value="z-a">Z to A</option>
+    </select>
+
+    <button id="filterButton">Filter</button>
+</div>
+
+<!-- Product Display -->
+<div id="productContainer"></div>
+<div id="pagination"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let currentPage = 1;
+        const productsPerPage = 20;
+
+        loadCategories();
+        loadProducts();
+
+        function loadCategories() {
+            $.ajax({
+                url: '/Admin/GetCategories',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    var dropdown = $('#categoryDropdown');
+                    $.each(data, function (index, category) {
+                        dropdown.append(`<option value="${category.categoryId}">${category.categoryName}</option>`);
+                    });
+                },
+                error: function () {
+                    alert("Failed to fetch categories.");
+                }
+            });
+        }
+
+        function loadProducts(categoryId = 0, priceSort = "", titleSort = "", page = 1) {
+            let url = `/Admin/GetProductsByCategory?categoryId=${categoryId}`;
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (priceSort === "low") {
+                        data.sort((a, b) => a.price - b.price);
+                    } else if (priceSort === "high") {
+                        data.sort((a, b) => b.price - a.price);
+                    }
+
+                    if (titleSort === "a-z") {
+                        data.sort((a, b) => a.productName.localeCompare(b.productName));
+                    } else if (titleSort === "z-a") {
+                        data.sort((a, b) => b.productName.localeCompare(a.productName));
+                    }
+
+                    var container = $('#productContainer');
+                    container.empty();
+
+                    let totalProducts = data.length;
+                    let totalPages = Math.ceil(totalProducts / productsPerPage);
+                    let start = (page - 1) * productsPerPage;
+                    let paginatedProducts = data.slice(start, start + productsPerPage);
+
+                    if (paginatedProducts.length === 0) {
+                        container.html("<p>No products found.</p>");
+                        return;
+                    }
+
+                    $.each(paginatedProducts, function (index, product) {
+                        var productHtml = `
+                            <div class="product-card"
+                                 data-category="${product.categoryId}"
+                                 data-id="${product.productId}"
+                                 data-subcategory="${product.subcategoryId}">
+                                <img src="${product.imageUrl}" alt="${product.productName}" class="product-image" />
+                                <h3>${product.productName}</h3>
+                                <p><strong>Subcategory:</strong> ${product.subcategoryId ? "Subcategory " + product.subcategoryId : "N/A"}</p>
+                                <p><strong>Description:</strong> ${product.description}</p>
+                                <p><strong>Price:</strong> $${product.price.toFixed(2)}</p>
+                            </div>`;
+                        container.append(productHtml);
+                    });
+
+                    renderPagination(totalPages, page);
+                },
+                error: function () {
+                    alert("Failed to fetch products.");
+                }
+            });
+        }
+
+        function renderPagination(totalPages, currentPage) {
+            let paginationHtml = "";
+            for (let i = 1; i <= totalPages; i++) {
+                paginationHtml += `<button class="pagination-btn" data-page="${i}" ${i === currentPage ? 'disabled' : ''}>${i}</button>`;
+            }
+            $("#pagination").html(paginationHtml);
+        }
+
+        $(document).on("click", ".pagination-btn", function () {
+            let selectedPage = $(this).data("page");
+            var selectedCategory = $('#categoryDropdown').val();
+            var selectedPriceSort = $('#sortPriceDropdown').val();
+            var selectedTitleSort = $('#sortTitleDropdown').val();
+            loadProducts(selectedCategory, selectedPriceSort, selectedTitleSort, selectedPage);
+        });
+
+        $('#filterButton').click(function () {
+            var selectedCategory = $('#categoryDropdown').val();
+            var selectedPriceSort = $('#sortPriceDropdown').val();
+            var selectedTitleSort = $('#sortTitleDropdown').val();
+            loadProducts(selectedCategory, selectedPriceSort, selectedTitleSort, 1);
+        });
+    });
+</script>

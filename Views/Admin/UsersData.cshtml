@@ -1,0 +1,167 @@
+﻿@model Tuple<List<OPS_Practice_Project.Models.UserModel>>
+
+@{
+    ViewData["Title"] = "User DataTable";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="shortcut icon" href="~/assets/images/favicon.ico">
+
+<!-- DataTables CSS -->
+<link href="~/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" />
+
+<!-- Bootstrap and Custom CSS -->
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/assets/css/icons.min.css" rel="stylesheet" />
+<link href="~/assets/css/metisMenu.min.css" rel="stylesheet" />
+<link href="~/assets/css/app.min.css" rel="stylesheet" />
+
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- Page Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="page-title">User DataTable</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Online Product Selling Website</a></li>
+                                <li class="breadcrumb-item active">User DataTables</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DataTable -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Default DataTable</h4>
+                        <p class="text-muted mb-0">
+                            DataTables with responsive and scrollable features.
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="userDataTable" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>Profile Image</th>
+                                        <th>Email Address</th>
+                                        <th>Mobile Number</th>
+                                        <th>User Name</th>
+                                        <th>Password</th>
+                                        <th>Address</th>
+                                        <th>Country ID</th>
+                                        <th>State ID</th>
+                                        <th>City ID</th>
+                                        <th>Flag</th>
+                                        <th>Create Date</th>
+                                        <th>Update User</th>
+                                        <th>Update Date</th>
+                                        <th>Captcha Code</th>
+                                        <th>Captcha Hashkey</th>
+                                        <th>Captcha Expiry</th>
+                                        <th>Captcha Status</th>
+
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var di1 in Model.Item1)
+                                    {
+                                        <tr>
+                                            <td>@di1.FirstName</td>
+                                            <td>@di1.MiddleName</td>
+                                            <td>@di1.LastName</td>
+                                            <td><img src="@di1.ProfileImage" alt="Profile Image" style="width:50px;height:50px;" /></td>
+                                            <td>@di1.EmailAddress</td>
+                                            <td>@di1.MobileNumber</td>
+                                            <td>@di1.UserName</td>
+                                            <td>@di1.Password</td>
+                                            <td>@di1.Address</td>
+                                            <td>@di1.CountryId</td>
+                                            <td>@di1.StateId</td>
+                                            <td>@di1.CityId</td>
+                                            <td>@(di1.Flag.HasValue ? di1.Flag.ToString : "No Flag")</td>
+                                            <td>@(di1.CreateDate.HasValue ? di1.CreateDate.Value.ToString("yyyy-MM-dd") : "No Date")</td>
+                                            <td>@di1.UpdateUser</td>
+                                            <td>@di1.UpdateDate</td>
+                                            <td>@di1.CaptchaCode</td>
+                                            <td>@di1.CaptchaHashKey</td>
+                                            <td>@di1.CaptchaExpiry</td>
+                                            <td>@di1.CaptchaStatus</td>
+                                            <td>
+                                                <a asp-action="EditUserData"  class="btn btn-sm btn-warning">Edit</a>
+                                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser(@di1.Id)">Delete</button>
+                                            
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and DataTables Scripts -->
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/bootstrap.bundle.min.js"></script>
+<script src="~/assets/js/metismenu.min.js"></script>
+<script src="~/assets/js/waves.js"></script>
+<script src="~/assets/js/feather.min.js"></script>
+<script src="~/assets/js/simplebar.min.js"></script>
+
+<!-- DataTables -->
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="~/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="~/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+<!-- DataTable Initialization Script -->
+<script>
+    $(document).ready(function () {
+        $('#userDataTable').DataTable({
+            responsive: true,
+            scrollX: true, // Enable horizontal scrolling
+            autoWidth: false, // Prevents auto width issues
+            columnDefs: [
+                { width: "100px", targets: [3, 7, 12, 15, 16] } // Set specific column widths if needed
+            ]
+        });
+    });
+
+    function deleteUser(id) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            $.ajax({
+                url: '@Url.Action("DeleteUser", "Admin")',
+                type: 'POST',
+                data: { id: id },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        window.location.href = '@Url.Action("UsersData", "Admin")'; // Redirect to User DataTable page
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while deleting the user.");
+                }
+            });
+        }
+    }
+
+</script>

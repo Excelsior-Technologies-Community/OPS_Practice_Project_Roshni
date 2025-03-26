@@ -1,0 +1,54 @@
+﻿@model OPS_Practice_Project.Models.ProductModel
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Edit Product</h2>
+
+    <form asp-action="EditProduct" asp-controller="Admin" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProductId" />
+
+        <div class="form-group">
+            <label for="ProductName">Product Name</label>
+            <input type="text" asp-for="ProductName" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <input type="number" asp-for="Price" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Stock">Stock Quantity</label>
+            <input type="number" asp-for="Stock" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="CategoryId">Category</label>
+            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control">
+                <option value="">Select Category</option>
+            </select>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Image">Product Image</label>
+            <input type="file" name="ImageFile" class="form-control-file" />
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Product Image" class="img-thumbnail mt-2" style="width:100px;height:100px;" />
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Product</button>
+        <a asp-action="ProductDataTable" asp-controller="Admin" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

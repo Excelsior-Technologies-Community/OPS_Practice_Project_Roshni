@@ -1,0 +1,242 @@
+﻿/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.register-container {
+    width: 50%;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Step Navigation */
+.step-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.step-nav {
+    width: 40px;
+    height: 40px;
+    background: #ddd;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+    z-index: 1;
+}
+
+    /* Active Step */
+    .step-nav.active {
+        background: #007bff;
+        color: white;
+    }
+
+    /* Completed Step */
+    .step-nav.completed {
+        background: #28a745;
+        color: white;
+    }
+
+/* Step Connector (Line between steps) */
+.step-navigation .step-nav:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 4px;
+    background: #ddd;
+    top: 50%;
+    left: calc(100% + 5px);
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+/* Active Step Connector */
+.step-nav.active::after,
+.step-nav.completed::after {
+    background: #007bff;
+}
+
+.step-nav.completed::after {
+    background: #28a745;
+}
+
+/* Form Styles */
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.step {
+    display: none;
+}
+
+    .step.active {
+        display: block;
+    }
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 5px;
+    background: #ddd;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#progress {
+    height: 100%;
+    background: #007bff;
+    width: 0%;
+    transition: width 0.4s ease-in-out;
+}
+
+/* Style the CAPTCHA container */
+.captcha-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between elements */
+    margin-top: 10px;
+}
+
+/* Style the CAPTCHA text */
+#captchaText {
+    font-size: 18px;
+    font-weight: bold;
+    background: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    letter-spacing: 3px;
+}
+
+/* Style the CAPTCHA input field */
+input[name="Register.CaptchaCode"] {
+    width: 100%;
+    max-width: 250px;
+    padding: 8px;
+    margin-top: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the CAPTCHA reload button */
+#reloadCaptchaButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    #reloadCaptchaButton:hover {
+        background-color: #0056b3;
+    }
+
+/* Validation error message */
+.text-danger {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .step-navigation {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .step-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+        margin: 5px;
+    }
+
+        .step-nav::after {
+            width: 30px;
+        }
+}

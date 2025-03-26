@@ -1,0 +1,158 @@
+﻿@model Tuple<List<OPS_Practice_Project.Models.UserModel>>
+
+@{
+    ViewData["Title"] = "EditUserdata";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="shortcut icon" href="~/assets/images/favicon.ico">
+
+<!-- App css -->
+<link href="~/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="~/assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+<link href="~/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+<link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+
+<div class="page-content">
+    <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="page-title">Edit Table</h4>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">Dastone</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0);">pages</a></li>
+                                <li class="breadcrumb-item active">Edit Table</li>
+                            </ol>
+                        </div><!--end col-->
+                        <div class="col-auto align-self-center">
+                            <a href="#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
+                                <span class="day-name" id="Day_Name">Today:</span>&nbsp;
+                                <span class="" id="Select_date">March 10</span>
+                                <i data-feather="calendar" class="align-self-center icon-xs ml-1"></i>
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-primary">
+                                <i data-feather="download" class="align-self-center icon-xs"></i>
+                            </a>
+                        </div><!--end col-->
+                    </div><!--end row-->
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div><!--end row-->
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Edit Table With Button</h4>
+                        <p class="text-muted mb-0">Add toolbar column with edit and delete buttons.</p>
+                    </div><!--end card-header-->
+                    <div class="card-body">
+                        <button class="btn  btn-primary btn-sm mb-3" id="submit_data">Submit</button>
+                        <div class="table-responsive">
+                            <table class="table  table-bordered table-sm" id="makeEditable">
+                                <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Last Name</th>
+                                        <th>ProfileImage</th>
+                                        <th>EmailAddress</th>
+                                        <th>MobileNumber</th>
+                                        <th>User Name</th>
+                                        <th>Password</th>
+                                        <th>Address</th>
+                                        <th>Country ID</th>
+                                        <th>State ID</th>
+                                        <th>City Id</th>
+                                        <th>Flag</th>
+                                        <th>CreateDate</th>
+                                        <th>UpdateUser</th>
+                                        <th>UpdateDate</th>
+                                        <th>Acation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var di1 in Model.Item1.Select((x, i) => new { Data = x, Index = i + 1 }))
+                                    {
+                                        <tr>
+
+                                            <td>@di1.Data.FirstName</td>
+                                            <td>@di1.Data.MiddleName</td>
+                                            <td>@di1.Data.LastName</td>
+                                            <td>@di1.Data.ProfileImage</td>
+                                            <td>@di1.Data.EmailAddress</td>
+                                            <td>@di1.Data.MobileNumber</td>
+                                            <td>@di1.Data.UserName</td>
+                                            <td>@di1.Data.Password</td>
+                                            <td>@di1.Data.Address</td>
+                                            <td>@di1.Data.CountryId</td>
+                                            <td>@di1.Data.StateId</td>
+                                            <td>@di1.Data.CityId</td>
+                                            <td>@di1.Data.Flag ?? "No Flag"</td>
+                                            <td>@di1.Data.CreateDate.HasValue ? di1.Data.CreateDate.Value.ToString("yyyy-MM-dd") : "No Date"</td>
+                                            <td>@di1.Data.UpdateUser</td>
+                                            <td>@di1.Data.UpdateDate</td>
+                                            <td>
+                                                <a class="btn btn-warning btn-sm edit-btn">Edit</a>
+                                                @* <form asp-action="Delete" method="post" style="display:inline;">
+                                                    <input type="hidden" name="id" value="@di1.Data.Id" />
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form> *@
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <button id="but_add" class="btn btn-success btn-sm">Add New Row</button>
+                    </div><!--end card-body-->
+                </div><!--end card-->
+            </div> <!-- end col -->
+        </div> <!-- end row -->
+
+        
+    </div><!-- container -->
+
+    
+</div>
+
+<script>
+    $(document).on('click', '.edit-btn', function () {
+        var $row = $(this).closest('tr');
+        $row.find('.editable').each(function () {
+            var text = $(this).text();
+            $(this).html('<input type="text" class="form-control" value="' + text + '" />');
+        });
+        $(this).removeClass('edit-btn btn-warning').addClass('save-btn btn-success').text('Save');
+    });
+
+    $(document).on('click', '.save-btn', function () {
+        var $row = $(this).closest('tr');
+        $row.find('input').each(function () {
+            var value = $(this).val();
+            $(this).parent().text(value);
+        });
+        $(this).removeClass('save-btn btn-success').addClass('edit-btn btn-warning').text('Edit');
+    });
+</script>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/bootstrap.bundle.min.js"></script>
+<script src="~/assets/js/metismenu.min.js"></script>
+<script src="~/assets/js/waves.js"></script>
+<script src="~/assets/js/feather.min.js"></script>
+<script src="~/assets/js/simplebar.min.js"></script>
+<script src="~/assets/js/moment.js"></script>
+<script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+
+<script src="/plugins/tiny-editable/mindmup-editabletable.js"></script>
+<script src="~/plugins/tiny-editable/numeric-input-example.js"></script>
+<script src="~/plugins/bootable/bootstable.js"></script>
+<script src="~/assets/pages/jquery.tabledit.init.js"></script>
+
+<!-- App js -->
+<script src="~/assets/js/app.js"></script>

@@ -1,0 +1,25 @@
+﻿@model OPS_Practice_Project.Models.UserViewModel
+@{
+    ViewData["Title"] = "Profile Page";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link href="~/css/ProfilePage.css" rel="stylesheet" />
+
+<div class="profile-container">
+    <h1>Profile Page</h1>
+    <div class="profile-card">
+         <img src="@Model.Register.ProfileImage" alt="Profile Image" class="profile-img" /> 
+        <h2>@Model.Register.FirstName @Model.Register.MiddleName @Model.Register.LastName</h2>
+        <p><strong>Email:</strong> @Model.Register.EmailAddress</p>
+        <p><strong>Mobile:</strong> @Model.Register.MobileNumber</p>
+        <p><strong>Username:</strong> @Model.Register.UserName</p>
+        <p><strong>Password:</strong>@Model.Register.Password</p>
+        <p><strong>Address:</strong> @Model.Register.Address</p>
+        <p><strong>Country:</strong> @Model.Register.CountryName</p>
+        <p><strong>State:</strong> @Model.Register.StateName</p>
+        <p><strong>City:</strong> @Model.Register.CityName</p>
+        <p><strong>User Type:</strong> @Model.Register.UserType</p>
+        <a class="btn btn-primary" asp-action="ProfileUpdatePage" asp-route-id="@Model.Register.Id">Profile Update</a>
+    </div>
+</div>

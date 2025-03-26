@@ -1,0 +1,129 @@
+﻿@model OPS_Practice_Project.Models.ProductViewModel
+
+@{
+    ViewData["Title"] = "Add Product Form";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link href="~/css/Addproduct.css" rel="stylesheet" />
+
+<form id="addProductForm" method="post" enctype="multipart/form-data">
+    <h1>Add Product Form</h1>
+
+    <div class="form-group">
+        <label asp-for="Product.ProductName">Product Name</label>
+        <input asp-for="Product.ProductName" class="form-control" />
+        <span asp-validation-for="Product.ProductName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Description">Description</label>
+        <textarea asp-for="Product.Description" class="form-control"></textarea>
+        <span asp-validation-for="Product.Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Price">Price</label>
+        <input asp-for="Product.Price" type="number" step="0.01" class="form-control" />
+        <span asp-validation-for="Product.Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Stock">Stock Quantity</label>
+        <input asp-for="Product.Stock" type="number" class="form-control" />
+        <span asp-validation-for="Product.Stock" class="text-danger"></span>
+    </div>
+
+    
+    <div class="form-group">
+        <label asp-for="Product.ProductImagePath" for="ProductImagePath">Image Upload</label>
+        <input asp-for="Product.ProductImagePath" type="file" class="form-control" id="ProductImagePath" name="Product.ProductImagePath" accept="image/*" required />
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="CategoryDropdown">Category</label>
+        <select id="CategoryDropdown" name="Product.CategoryId" class="form-select" required>
+            <option value="">Select Category</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Flag">Status</label>
+        <select asp-for="Product.Flag" class="form-control">
+            <option value="A">Active</option>
+            <option value="I">Inactive</option>
+        </select>
+        <span asp-validation-for="Product.Flag" class="text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-success">Add Product</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+<script>
+    @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+    }
+    $(document).ready(function () {
+        $.ajax({
+            url: '/Admin/GetCategories',
+            type: 'GET',
+            success: function (categories) {
+                $.each(categories, function (index, category) {
+                    $("#CategoryDropdown").append(
+                        `<option value="${category.categoryId}">${category.categoryName}</option>`
+                    );
+                });
+            },
+            error: function () {
+                alert("Error loading categories. Please try again.");
+            }
+        });
+    
+
+
+        $("#addProductForm").validate({
+            rules: {
+                "Product.ProductName": "required",
+                "Product.Price": {
+                    required: true,
+                    number: true,
+                    min: 0.01
+                },
+                "Product.Description": "required",
+                "Product.ProductImagePath": "required",
+                "Product.CategoryId": "required"
+            },
+            messages: {
+                "Product.ProductName": "Please enter the product name",
+                "Product.Price": {
+                    required: "Please enter the price",
+                    number: "Please enter a valid price",
+                    min: "Price must be greater than 0"
+                },
+                "Product.Description": "Please enter a description",
+                "Product.ProductImagePath": "Please select an image",
+                "Product.CategoryId": "Please select a category"
+            },
+            submitHandler: function (form) {
+                var formData = new FormData(form);
+                $.ajax({
+                    url: "/Admin/AddProductForm",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function () {
+                        alert("Product added successfully.");
+                        window.location.href = "/Admin/AdminHomePage";
+                    },
+                    error: function () {
+                        alert("An error occurred while adding the product.");
+                    }
+                });
+                return false;
+            }
+        });
+    });
+</script>

@@ -1,0 +1,376 @@
+﻿@model OPS_Practice_Project.Models.UserViewModel
+@{
+    ViewData["Title"] = "Register Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/Register.css" rel="stylesheet" />
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+
+<div class="register-container">
+    <h2 class="text-center text-2xl font-bold mb-4">Register</h2>
+
+    @* <div class="step-navigation">
+        <button class="step-nav" data-step="1">Step 1</button>
+        <button class="step-nav" data-step="2">Step 2</button>
+        <button class="step-nav" data-step="3">Step 3</button>
+    </div> *@
+
+    <div class="step-navigation">
+        <div class="step-nav active">1</div>
+        <div class="step-nav">2</div>
+        <div class="step-nav">3</div>
+       
+    </div>
+
+    <div class="step step-1">Step 1 Content</div>
+    <div class="step step-2" style="display: none;">Step 2 Content</div>
+    <div class="step step-3" style="display: none;">Step 3 Content</div> *
+
+    @* <button class="prev">Previous</button>
+    <button class="next">Next</button> *@
+
+    <div class="progress-container">
+        <div id="progress" style="width: 0%; height: 5px; background-color: blue;"></div>
+    </div>
+
+
+    <form asp-action="RegisterPage" method="post" enctype="multipart/form-data" id="registerForm" class="p-4 bg-white shadow-md rounded-lg max-w-lg mx-auto">
+        <div class="step step-1">
+          
+            <h3>Step 1: Personal Information</h3>
+                <div class="mb-4">
+                    <label asp-for="Register.FirstName" class="block text-gray-700">First Name</label>
+                    <input asp-for="Register.FirstName" class="w-full p-2 border rounded" />
+                    <span asp-validation-for="Register.FirstName" class="text-red-500"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Register.MiddleName" class="block text-gray-700">Middle Name</label>
+                    <input asp-for="Register.MiddleName" class="w-full p-2 border rounded" />
+                    <span asp-validation-for="Register.MiddleName" class="text-red-500"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Register.LastName" class="block text-gray-700">Last Name</label>
+                    <input asp-for="Register.LastName" class="w-full p-2 border rounded" />
+                    <span asp-validation-for="Register.LastName" class="text-red-500"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Register.ProfileImagePath" class="block text-gray-700">Profile Image</label>
+                    <input asp-for="Register.ProfileImagePath" type="file" class="w-full p-2 border rounded" />
+                </div>
+            <button type="button" class="next btn btn-primary">Next</button>
+        </div>
+
+        <div class="step step-2 hidden">
+            <h3>Step 2: Address Details</h3>
+            <div class="mb-4">
+                <label asp-for="Register.MobileNumber" class="block text-gray-700">Mobile Number</label>
+                <input asp-for="Register.MobileNumber" type="tel" class="w-full p-2 border rounded" />
+                <span asp-validation-for="Register.MobileNumber" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Register.Address" class="block text-gray-700">Address</label>
+                <textarea asp-for="Register.Address" class="w-full p-2 border rounded"></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Register.CountryId" class="block text-gray-700">Country</label>
+                @* <select asp-for="Register.CountryId" asp-items="Model.Countries" class="w-full p-2 border rounded"></select>
+                *@
+                <select id="CountryDropdown" asp-for="Register.CountryId" required>
+                    <option value="">Select Country</option>
+                    @if (Model.Countries != null && Model.Countries.Any())
+                    {
+                        @foreach (var country in Model.Countries)
+                        {
+                            <option value="@country.Value">@country.Text</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Register.StateId" class="block text-gray-700">State</label>
+                @* <select asp-for="Register.StateId" asp-items="Model.States" class="w-full p-2 border rounded"></select>
+                *@
+                <select id="StateDropdown" asp-for="Register.StateId" required>
+                    <option value="">Select State</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Register.CityId" class="block text-gray-700">City</label>
+                @* <select asp-for="Register.CityId" asp-items="Model.Cities" class="w-full p-2 border rounded"></select>
+                *@
+                <select id="CityDropdown" asp-for="Register.CityId" required>
+                    <option value="">Select City</option>
+                </select>
+            </div>
+            <button type="button" class="prev btn btn-secondary">Previous</button>
+            <button type="button" class="next btn btn-primary">Next</button>
+        </div>
+
+        <div class="step step-3 hidden">
+            <h3>Step 3: Account Details</h3>
+            <div class="mb-4">
+                <label asp-for="Register.EmailAddress" class="block text-gray-700">Email Address</label>
+                <input asp-for="Register.EmailAddress" type="email" class="w-full p-2 border rounded" />
+                <span asp-validation-for="Register.EmailAddress" class="text-red-500"></span>
+            </div>
+
+        
+            <div class="mb-4">
+                <label asp-for="Register.UserName" class="block text-gray-700">Username</label>
+                <input asp-for="Register.UserName" class="w-full p-2 border rounded" />
+                <span asp-validation-for="Register.UserName" class="text-red-500"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Register.Password" class="block text-gray-700">Password</label>
+                <input asp-for="Register.Password" type="password" class="w-full p-2 border rounded" />
+                <span asp-validation-for="Register.Password" class="text-red-500"></span>
+            </div>
+        
+
+            <div class="mb-4">
+                <label asp-for="Register.UserTypeId" class="block text-gray-700">User Type</label>
+                <select id="UserTypeDropdown" asp-for="Register.UserTypeId" required>
+                    <option value="">Select UserType</option>
+                </select>
+
+
+            @* <span asp-validation-for="Register.UserTypeId" class="text-red-500"></span> *@
+            </div>
+
+            <div class="mb-4">
+                <label>CAPTCHA</label>
+                <div>
+                    <span id="captchaText">@ViewBag.CaptchaCode</span> <!-- CAPTCHA Display -->
+                    <input type="hidden" id="CaptchaHashKey" name="Register.CaptchaHashKey" value="@ViewBag.CaptchaHashKey" />
+                    <button type="button" id="reloadCaptchaButton">Reload CAPTCHA</button>
+                </div>
+
+                <input asp-for="Register.CaptchaCode" class="form-control" placeholder="Enter CAPTCHA" />
+                <span asp-validation-for="Register.CaptchaCode" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="Register.CaptchaHashKey" value="@ViewBag.CaptchaHashKey" />
+            <input type="hidden" asp-for="Register.CaptchaExpiry" value="@DateTime.Now.AddMinutes(15)" />
+            <input type="hidden" asp-for="Register.CaptchaStatus" value="Active" />
+
+            <button type="button" class="prev btn btn-secondary">Previous</button>
+            @* <button type="submit" class="btn btn-success">Register</button>*@
+            <button type="submit" class="w-full p-2 bg-blue-500 text-white rounded">Register</button>
+
+                <p>Already have an Account? <a href="@Url.Action("LoginPage")">Login Now.</a></p>
+                <br/>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="text-danger">
+                        @Html.ValidationSummary(true)
+                    </div>
+                }
+        </div>
+    </form>
+
+    
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        $(document).ready(function () {
+            let currentStep = 1;
+            const totalSteps = $(".step").length;
+
+            function showStep(step) {
+                $(".step").hide();
+                $(".step-" + step).fadeIn();  // Show the selected step
+                updateProgressBar(step);
+                updateStepNav(step);
+            }
+
+            function updateProgressBar(step) {
+                let progress = ((step - 1) / (totalSteps - 1)) * 100;
+                $("#progress").css("width", progress + "%");
+            }
+
+            function updateStepNav(step) {
+                $(".step-nav").removeClass("active completed");
+                $(".step-nav").each(function (index) {
+                    if (index + 1 < step) {
+                        $(this).addClass("completed");
+                    } else if (index + 1 === step) {
+                        $(this).addClass("active");
+                    }
+                });
+            }
+
+            $(".next").click(function () {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            });
+
+            $(".prev").click(function () {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            });
+
+            $(".step-nav").click(function () {
+                let step = $(this).data("step"); // Get step number
+                showStep(step);
+                currentStep = step; // Update current step
+            });
+
+            showStep(1); // Initialize first step
+        
+
+
+            $("#registerForm").submit(function (e) {
+                var isValid = true;
+
+                // Required field validation
+                $('#registerForm input, #registerForm select, #registerForm textarea').each(function () {
+                    if ($(this).prop('required') && $(this).val() === '') {
+                        $(this).next('span').text('This field is required.');
+                        isValid = false;
+                    } else {
+                        $(this).next('span').text('');
+                    }
+                });
+
+                
+                var email = $('#EmailAddress').val();
+                var emailPattern = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if (!emailPattern.test(email)) {
+                    $('#EmailAddress').next('span').text('Invalid email address.');
+                    isValid = false;
+                }
+
+                
+                var mobile = $('#MobileNumber').val();
+                var mobilePattern = /^[0-9]{10}$/;
+                if (!mobilePattern.test(mobile)) {
+                    $('#MobileNumber').next('span').text('Enter a valid 10-digit mobile number.');
+                    isValid = false;
+                }
+
+                
+                var password = $('#Password').val();
+                if (password.length < 6) {
+                    $('#Password').next('span').text('Password must be at least 6 characters.');
+                    isValid = false;
+                }
+
+                
+                if (!isValid) {
+                    e.preventDefault();
+                }
+            });
+
+            $('#CountryDropdown').change(function () {
+                var countryId = $(this).val();
+                $("#StateDropdown").empty().append('<option value="">Select State</option>');
+                $("#CityDropdown").empty().append('<option value="">Select City</option>');
+
+                if (countryId) {
+                    $.ajax({
+                        url: '/Home/GetStates',
+                        type: 'GET',
+                        data: { countryId: countryId },
+                        success: function (states) {
+                            $.each(states, function (index, state) {
+                                $("#StateDropdown").append('<option value="' + state.stateId + '">' + state.state + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading states. Please try again.");
+                        }
+                    });
+                }
+            });
+
+
+            $('#StateDropdown').change(function () {
+                var stateId = $(this).val();
+                $("#CityDropdown").empty().append('<option value="">Select City</option>');
+
+                if (stateId) {
+                    $.ajax({
+                        url: '/Home/GetCities',
+                        type: 'GET',
+                        data: { stateId: stateId },
+                        success: function (cities) {
+                            $.each(cities, function (index, city) {
+                                $("#CityDropdown").append('<option value="' + city.cityId + '">' + city.city + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert("Error loading cities. Please try again.");
+                        }
+                    });
+                }
+            });
+
+            $(document).ready(function () {
+                $.ajax({
+                    url: '/Home/GetUserTypes',
+                    type: 'GET',
+                    success: function (userTypes) {
+                        $.each(userTypes, function (index, userType) {
+                            $("#UserTypeDropdown").append('<option value="' + userType.id + '">' + userType.userType + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert("Error loading user types. Please try again.");
+                    }
+                });
+            });
+
+            function reloadCaptcha() {
+                $.ajax({
+                    url: '/Home/ReloadCaptcha',
+                    type: 'GET',
+                    success: function (response) {
+                        if (response.success) {
+                            $('#captchaText').text(response.newCaptcha); // Update the CAPTCHA text
+                            $('#CaptchaHashKey').val(response.newHash);  // Update hidden input field
+                        } else {
+                            alert("Failed to reload CAPTCHA. " + response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error: ", error);
+                        alert("An error occurred while reloading CAPTCHA.");
+                    }
+                });
+            }
+
+            // Attach event to Reload button
+            $(document).ready(function () {
+                $('#reloadCaptchaButton').click(function () {
+                    reloadCaptcha();
+                });
+            });
+
+
+
+
+        });
+    </script>
+}

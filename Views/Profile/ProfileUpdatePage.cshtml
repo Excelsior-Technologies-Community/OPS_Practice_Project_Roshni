@@ -1,0 +1,178 @@
+﻿
+@model OPS_Practice_Project.Models.UserViewModel
+@{
+    ViewData["Title"] = "Update Profile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link href="~/css/UpdateProfile.css" rel="stylesheet" />
+
+<div class="update-profile-container">
+    <h1>Update Profile</h1>
+    <form asp-action="ProfileUpdatePage" asp-controller="Profile" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="@Model.Register.Id" />
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <input type="text" class="form-control" id="FirstName" name="FirstName" 
+                   value="@Model?.Register?.FirstName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="MiddleName">Middle Name</label>
+            <input type="text" class="form-control" id="MiddleName" name="MiddleName" 
+                   value="@Model?.Register?.MiddleName" />
+        </div>
+
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" class="form-control" id="LastName" name="LastName" 
+                   value="@Model?.Register?.LastName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="ProfileImage">Profile Image</label>
+            <input type="file" class="form-control-file" id="ProfileImage" value="@Model.Register.ProfileImagePath" name="ProfileImage" accept="image/*" />
+        </div>
+
+        <div class="form-group">
+            <label for="EmailAddress">Email</label>
+            <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" 
+                   value="@Model.Register.EmailAddress" required />
+        </div>
+
+        <div class="form-group">
+            <label for="MobileNumber">Mobile</label>
+            <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber" 
+                   value="@Model.Register.MobileNumber" required />
+        </div>
+
+        <div class="form-group">
+            <label for="UserName">UserName</label>
+            <input type="tel" class="form-control" id="UserName" name="UserName"
+                   value="@Model.Register.UserName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Password</label>
+            <input type="tel" class="form-control" id="Password" name="Password"
+                   value="@Model.Register.Password" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Address">Address</label>
+            <textarea class="form-control" id="Address" name="Address" rows="3" required>@Model.Register.Address</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Country:</label>
+            <select id="CountryDropdown" asp-for="Register.CountryId" class="form-control" required>
+                <option value="">Select Country</option>
+                @foreach (var country in Model.Countries)
+                {
+                    <option value="@country.Value" selected="@(Model.Register.CountryId.ToString() == country.Value)">@country.Text</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>State:</label>
+            <select id="StateDropdown" asp-for="Register.StateId" class="form-control" required>
+                <option value="">Select State</option>
+            </select>
+
+            
+        </div>
+
+        <div class="form-group">
+            <label>City:</label>
+            <select id="CityDropdown" asp-for="Register.CityId" class="form-control" required>
+                <option value="">Select City</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="UserType">User Type</label>
+            <select class="form-control" id="UserType" name="UserType" asp-for="Register.UserType"
+                    asp-items="@(new SelectList(new[] { "Admin", "User" }, Model.Register.UserType))" required>
+            </select>
+
+
+        </div>
+
+        
+
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#profileUpdateForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent page refresh
+
+        var formData = new FormData(this);
+        $.ajax({
+            url: '/Profile/ProfileUpdatePage',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                alert('Profile updated successfully!');
+                // Optionally, update the UI without reload
+            },
+            error: function () {
+                alert('Failed to update profile.');
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#CountryDropdown').change(function () {
+            var countryId = $(this).val();
+            $('#StateDropdown').empty().append('<option value="">Select State</option>');
+            $('#CityDropdown').empty().append('<option value="">Select City</option>');
+
+            if (countryId) {
+                $.getJSON('/Profile/GetStates', { countryId: countryId }, function (states) {
+                    $.each(states, function (index, state) {
+                        $('#StateDropdown').append($('<option>', {
+                            value: state.stateId,
+                            text: state.stateName
+                        }));
+                    });
+                });
+            }
+        });
+
+        $('#StateDropdown').change(function () {
+            var stateId = $(this).val();
+            $('#CityDropdown').empty().append('<option value="">Select City</option>');
+
+            if (stateId) {
+                $.getJSON('/Profile/GetCities', { stateId: stateId }, function (cities) {
+                    $.each(cities, function (index, city) {
+                        $('#CityDropdown').append($('<option>', {
+                            value: city.cityId,
+                            text: city.cityName
+                        }));
+                    });
+                });
+            }
+        });
+
+        // Auto-load states and cities if already selected
+        var selectedCountry = $('#CountryDropdown').val();
+        var selectedState = $('#StateDropdown').data('selected');
+        var selectedCity = $('#CityDropdown').data('selected');
+
+        if (selectedCountry) {
+            $('#CountryDropdown').change(); // Trigger state load
+            if (selectedState) {
+                $('#StateDropdown').val(selectedState).change(); // Trigger city load
+            }
+        }
+    });
+
+</script>

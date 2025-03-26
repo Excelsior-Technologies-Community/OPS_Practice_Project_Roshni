@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using OPS_Practice_Project.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<LoginRepository>();
 
 // Add session services
 builder.Services.AddSession(options =>
@@ -14,6 +19,13 @@ builder.Services.AddSession(options =>
 
 // Add HttpContextAccessor
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Home/Login";  // Set login page path
+        options.LogoutPath = "/Profile/Logout"; // Set logout page path
+        //options.AccessDeniedPath = "/Account/AccessDenied"; // Set access denied page path
+    });
 
 var app = builder.Build();
 

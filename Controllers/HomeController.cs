@@ -17,12 +17,15 @@ namespace OPS_Practice_Project.Controllers
         private readonly AdminRepository _adminRepository;
         private readonly IWebHostEnvironment _env;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(IWebHostEnvironment env,IHttpContextAccessor httpContextAccessor)
+        private readonly LoginRepository _loginHistoryRepository;
+
+        public HomeController(IWebHostEnvironment env,IHttpContextAccessor httpContextAccessor, LoginRepository loginHistoryRepository)
         {
             _registerRepository = new UserRepository();
             _env = env;
             _adminRepository = new AdminRepository();
             _httpContextAccessor = httpContextAccessor;
+            _loginHistoryRepository = loginHistoryRepository;
         }
         public IActionResult Index()
         {
@@ -208,7 +211,7 @@ namespace OPS_Practice_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult LoginPage(string username, string password)
+        public async Task<IActionResult> LoginPage(string username, string password)
         {
             var user = _registerRepository.GetUserList()
                 .FirstOrDefault(u => u.UserName == username && u.Password == password);
@@ -217,31 +220,66 @@ namespace OPS_Practice_Project.Controllers
             {
                 HttpContext.Session.SetInt32("UserId", Convert.ToInt32(user.Id));
                 HttpContext.Session.SetString("UserName", username);
-
                 int userTypeId = (int)user.UserTypeId;
                 HttpContext.Session.SetInt32("UserTypeId", userTypeId);
 
-                if (userTypeId == 1) // Admin
+                string ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString();
+                string userAgent = Request.Headers["User-Agent"].ToString();
+
+                // Insert login history and get the inserted record Id
+                bool isInserted = await _loginHistoryRepository.InsertLoginRecordAsync(user.Id, user.UserName, ipAddress, userAgent, "INSERT");
+
+                if (isInserted)
+                {
+                    // Fetch the last inserted LoginHistory ID (you may need a stored procedure for this)
+                    long loginHistoryId = _loginHistoryRepository.GetLastInsertedId(user.Id);
+                    HttpContext.Session.SetInt32("LoginHistoryId", Convert.ToInt32(loginHistoryId));
+                }
+
+                if (userTypeId == 1)
                 {
                     return RedirectToAction("AdminHomePage", "Admin");
                 }
-                else if (userTypeId == 2) // User
+                else if (userTypeId == 2)
                 {
                     return RedirectToAction("ProfileHome", "Profile");
                 }
-                else
-                {
-                    ViewBag.Error = "Invalid user type.";
-                    return View();
-                }
-                //ViewBag.SuccessMessage = "Login Successful! Redirecting to your Profile Home Page...";
-
-
             }
 
             ViewBag.Error = "Invalid username or password.";
             return View();
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            try
+            {
+                // Retrieve the Login History ID from session
+                int? loginHistoryId = HttpContext.Session.GetInt32("LoginHistoryId");
+
+                if (loginHistoryId.HasValue)
+                {
+                    // Update logout time in the database using Id
+                    await _loginHistoryRepository.UpdateLogoutRecordAsync(loginHistoryId.Value, "Logout");
+                }
+
+                // Clear session
+                HttpContext.Session.Clear();
+
+                // Redirect to Login Page
+                return RedirectToAction("LoginPage", "Home");
+            }
+            catch (Exception ex)
+            {
+                // Log error (if needed)
+                Debug.WriteLine("Logout Error: " + ex.Message);
+                return RedirectToAction("Index", "Home"); // Redirect to home if an error occurs
+            }
+        }
+
+
 
         public IActionResult Cart()
         {

@@ -1,0 +1,51 @@
+﻿.chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Chat Icon Button */
+.chat-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #007bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+    /* Chat Icon */
+    .chat-button img {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Hover Effect */
+    .chat-button:hover {
+        transform: scale(1.1);
+    }
+
+/* Chat Text (Initially Hidden) */
+.chat-text {
+    background: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    position: absolute;
+    right: 60px;
+    display: none;
+}
+
+/* Show Text When Hovering Over Chat Icon */
+.chat-container:hover .chat-text {
+    display: block;
+}

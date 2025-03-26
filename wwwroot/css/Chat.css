@@ -1,0 +1,126 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Chat Container */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 30px auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Chat Header */
+.chat-header {
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .chat-header h2 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .chat-header .icons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .chat-header i {
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+/* Chat Messages */
+.chat-messages {
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+}
+
+/* Individual Message */
+.message {
+    max-width: 70%;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+    .message.received {
+        background: #f1f1f1;
+        align-self: flex-start;
+    }
+
+    .message.sent {
+        background: #007bff;
+        color: white;
+        align-self: flex-end;
+    }
+
+/* Chat Input */
+.chat-input {
+    display: flex;
+    padding: 10px;
+    background: #f1f1f1;
+    border-top: 1px solid #ddd;
+}
+
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .chat-input button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin-left: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+        .chat-input button:hover {
+            background: #0056b3;
+        }
+
+
+.chat-box-left {
+    background: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.chat-search {
+    margin-bottom: 10px;
+}
+
+.chat-box {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f8f9fa;
+}
+
+.nav-pills .nav-link {
+    border-radius: 5px;
+}

@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\assets\\css\\Home.css"
     },
     {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\assets\\css\\Homepage.css",
+      "PackagePath": "staticwebassets\\assets\\css\\Homepage.css"
+    },
+    {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\assets\\css\\app.min.css",
       "PackagePath": "staticwebassets\\assets\\css\\app.min.css"
     },
@@ -849,6 +853,10 @@
       "PackagePath": "staticwebassets\\css\\Categories.css"
     },
     {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\css\\Chat.css",
+      "PackagePath": "staticwebassets\\css\\Chat.css"
+    },
+    {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\css\\Help\\CustomerSupport.css",
       "PackagePath": "staticwebassets\\css\\Help\\CustomerSupport.css"
     },
@@ -1631,6 +1639,10 @@
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\03d2078c-5da6-4d99-9590-d3f441cabbf0_Brahmi.jpg",
       "PackagePath": "staticwebassets\\uploads\\03d2078c-5da6-4d99-9590-d3f441cabbf0_Brahmi.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg",
+      "PackagePath": "staticwebassets\\uploads\\04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg"
     },
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\3e9c155f-3e02-407e-9793-4224255c23e2_Basil, Indian Subja [Barbari Tulsi].jpg",

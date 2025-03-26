@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "NtrE7HTXlwwaGu54bCSRDM+iWsBW9AjTHxAAIgxf2OI=",
+  "Hash": "vi8UCWT1UTNE3vGEmLOvc6Nl1cdzQpsYlyW+cFtn1SI=",
   "Source": "OPS_Practice_Project",
   "BasePath": "_content/OPS_Practice_Project",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\css\\Home.css"
+    },
+    {
+      "Identity": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\assets\\css\\Homepage.css",
+      "SourceId": "OPS_Practice_Project",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\",
+      "BasePath": "_content/OPS_Practice_Project",
+      "RelativePath": "assets/css/Homepage.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\css\\Homepage.css"
     },
     {
       "Identity": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\assets\\css\\icons.min.css",
@@ -3950,6 +3969,25 @@
       "OriginalItemSpec": "wwwroot\\css\\Categories.css"
     },
     {
+      "Identity": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\css\\Chat.css",
+      "SourceId": "OPS_Practice_Project",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\",
+      "BasePath": "_content/OPS_Practice_Project",
+      "RelativePath": "css/Chat.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Chat.css"
+    },
+    {
       "Identity": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\css\\Help\\CustomerSupport.css",
       "SourceId": "OPS_Practice_Project",
       "SourceType": "Discovered",
@@ -7786,6 +7824,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\03d2078c-5da6-4d99-9590-d3f441cabbf0_Brahmi.jpg"
+    },
+    {
+      "Identity": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg",
+      "SourceId": "OPS_Practice_Project",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\",
+      "BasePath": "_content/OPS_Practice_Project",
+      "RelativePath": "uploads/04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg"
     },
     {
       "Identity": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\3e9c155f-3e02-407e-9793-4224255c23e2_Basil, Indian Subja [Barbari Tulsi].jpg",

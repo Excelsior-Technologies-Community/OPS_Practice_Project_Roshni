@@ -78,6 +78,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld1Byb2R1Y3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[F:/Company Work/OPS_Practice_Project/Views/Chat/Chat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxDaGF0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [F:/Company Work/OPS_Practice_Project/Views/Help/CustomerSupport.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSGVscFxDdXN0b21lclN1cHBvcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -124,6 +128,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [F:/Company Work/OPS_Practice_Project/Views/Profile/ProfileUpdatePage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxQcm9maWxlVXBkYXRlUGFnZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[F:/Company Work/OPS_Practice_Project/Views/Profile/UserChat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxVc2VyQ2hhdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [F:/Company Work/OPS_Practice_Project/Views/Shared/Error.cshtml]

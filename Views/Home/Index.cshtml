@@ -7,6 +7,7 @@
 <link href="~/assets/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
 <link href="~/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
 <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" />
+<link href="~/assets/css/Homepage.css" rel="stylesheet"/>
 
 <div class="page-content">
     <div class="container-fluid">
@@ -259,6 +260,14 @@
                     </div><!--end card-body-->
                 </div><!--end card-->
             </div><!--end col-->
+
+            <div class="chat-container" onclick="openChatPage()">
+                <div class="chat-button">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1370/1370907.png" alt="Chat">
+                </div>
+                <div class="chat-text">How can I help you?</div>
+            </div>
+
         </div>  <!--end row-->
 
     </div><!-- container -->
@@ -278,3 +287,11 @@
 
 <!-- App js -->
 <script src="~/assets/js/app.js"></script>
+
+<script>
+    function openChatPage() {
+        window.location.href = '/Chat/Chat';
+        // Replace with your actual chat page URL
+    }
+
+</script>

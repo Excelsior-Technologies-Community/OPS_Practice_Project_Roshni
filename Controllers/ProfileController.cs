@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace OPS_Practice_Project.Controllers
 {
@@ -13,12 +15,16 @@ namespace OPS_Practice_Project.Controllers
         private readonly UserRepository _registerRepository;
         private readonly IWebHostEnvironment _env;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public ProfileController(IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor)
+        private readonly LoginRepository _loginHistoryRepository;
+
+        public ProfileController(IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor, LoginRepository loginHistoryRepository)
         {
             _registerRepository = new UserRepository();
             _env = env;
             _httpContextAccessor = httpContextAccessor;
+            _loginHistoryRepository = loginHistoryRepository;
         }
+        
         public IActionResult ProfileHome()
         {
             return View();
@@ -143,7 +149,11 @@ namespace OPS_Practice_Project.Controllers
             return Json(cities);
         }
 
-
+        public IActionResult UserChat()
+        {
+            return View();
+        }
+        
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

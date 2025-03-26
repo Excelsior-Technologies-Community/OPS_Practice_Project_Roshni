@@ -3,7 +3,21 @@
     ViewData["Title"] = "View";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
+<link href="~/assets/css/Homepage.css" rel="stylesheet" />
 
 <h1>Profile Home page</h1>
 
+<div class="chat-container" onclick="openChatPage()">
+    <div class="chat-button">
+        <img src="https://cdn-icons-png.flaticon.com/512/1370/1370907.png" alt="Chat">
+    </div>
+    <div class="chat-text">How can I help you?</div>
+</div>
 
+<script>
+    function openChatPage() {
+        window.location.href = '/Profile/UserChat';
+        // Replace with your actual chat page URL
+    }
+
+</script>

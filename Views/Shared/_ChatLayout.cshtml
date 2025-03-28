@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+
+    <!-- Render dynamic menu -->
+    @RenderSection("Menu", required: false)
+
+    <div class="main-content">
+        @RenderBody()
+    </div>
+
+    <footer class="footer text-center text-sm-left">
+        &copy; 2025 - Online Product Selling Website <span class="d-none d-sm-inline-block float-right">Crafted with <i class="mdi mdi-heart text-danger"></i> by Mannatthemes</span>
+    </footer>
+
+</body>
+</html>

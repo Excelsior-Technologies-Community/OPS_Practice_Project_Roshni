@@ -32,6 +32,7 @@ namespace OPS_Practice_Project.Controllers
             return View();
         }
 
+
         public IActionResult Privacy()
         {
             return View();
@@ -287,6 +288,11 @@ namespace OPS_Practice_Project.Controllers
         }
 
         public IActionResult ElectronicsProducts()
+        {
+            return View();
+        }
+
+        public IActionResult Chat()
         {
             return View();
         }

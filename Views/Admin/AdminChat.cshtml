@@ -1,0 +1,172 @@
+﻿@model List<UserModel>
+
+@{
+    ViewData["Title"] = "Admin Chat";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .chat-message.admin {
+        text-align: right;
+    }
+
+    .chat-message.user {
+        text-align: left;
+    }
+
+    .user-list {
+        height: 500px;
+        overflow-y: auto;
+        border-right: 1px solid #ddd;
+    }
+
+    .chat-area {
+        height: 500px;
+        overflow-y: auto;
+    }
+
+    .user-item {
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .user-item:hover {
+            background-color: #f1f1f1;
+        }
+
+    .notification-badge {
+        background-color: red;
+        color: white;
+        font-size: 12px;
+        padding: 5px 10px;
+        border-radius: 50%;
+        display: none;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- User List -->
+        <div class="col-md-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">Users</div>
+                <div class="card-body user-list" id="user-list">
+                    @foreach (var user in Model)
+                    {
+                        <div class="user-item mb-2 p-2 border rounded" data-userid="@user.Id" id="user-@user.Id">
+                            <div>
+                                <img src="@user.ProfileImage" width="30" height="30" class="rounded-circle me-2" />
+                                <strong>@user.UserName</strong> <small>(ID: @user.Id)</small>
+                            </div>
+                            <span class="notification-badge" id="notify-@user.Id">New</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Box -->
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">Live Chat <span id="chat-with"></span></div>
+                <div class="card-body chat-area" id="chat-box"></div>
+                <div class="card-footer">
+                    <div class="input-group">
+                        <input type="text" id="message-input" class="form-control" placeholder="Type your message..." disabled />
+                        <button class="btn btn-danger" id="send-btn" disabled>Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var selectedUserId = 0;
+    const adminId = 4;
+
+    // Initialize SignalR connection
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chathub")
+        .build();
+
+    connection.start().then(function () {
+        console.log("✅ SignalR Connected");
+    }).catch(function (err) {
+        console.error("❌ SignalR Error:", err.toString());
+    });
+
+    // Function to append message to chat box
+    function appendMessage(senderId, message, isAdminReply, sentOn) {
+        var alignClass = isAdminReply ? 'text-end' : 'text-start';
+        var senderLabel = isAdminReply ? '<b>Admin:</b>' : '<b>User:</b>';
+
+        $('#chat-box').append(`
+                <div class="${alignClass}">${senderLabel} ${message} <br/><small>${sentOn}</small></div><hr>
+            `);
+        $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+    }
+
+    // Receive messages from SignalR
+    connection.on("ReceiveMessage", function (senderId, receiverId, message, isAdminReply, sentOn) {
+        if (senderId == selectedUserId || receiverId == selectedUserId) {
+            appendMessage(senderId, message, isAdminReply, sentOn);
+        } else {
+            if (!isAdminReply) {
+                $('#notify-' + senderId).show();
+                moveUserToTop(senderId);
+            }
+        }
+    });
+
+    // Load chat history when clicking a user
+    $(document).on('click', '.user-item', function () {
+        selectedUserId = $(this).data('userid');
+        $('#chat-with').html("- User ID: " + selectedUserId);
+        $('#message-input').prop('disabled', false);
+        $('#send-btn').prop('disabled', false);
+
+        $('#notify-' + selectedUserId).hide(); // Hide notification badge
+
+        loadChat(selectedUserId);
+    });
+
+    // Move user to top when they send a message
+    function moveUserToTop(userId) {
+        var userDiv = $('#user-' + userId);
+        $('#user-list').prepend(userDiv);
+    }
+
+    // Load chat history via AJAX
+    function loadChat(userId) {
+        $('#chat-box').html('<em>Loading...</em>');
+
+        $.get('/Admin/LoadChat', { userId: userId }, function (res) {
+            $('#chat-box').html('');
+            res.forEach(function (msg) {
+                appendMessage(msg.senderId, msg.message, msg.isAdminReply, msg.sentOn);
+            });
+        });
+    }
+
+    // Send message from admin
+    $('#send-btn').click(function () {
+        var msg = $('#message-input').val();
+        if (msg.trim() === "" || selectedUserId === 0) return;
+
+        $.post('/Admin/SendAdminMessage', { userId: selectedUserId, message: msg }, function (res) {
+            if (res.success) {
+                connection.invoke("SendMessage", adminId, selectedUserId, msg, true, new Date().toLocaleString());
+                $('#message-input').val('');
+            } else {
+                alert(res.message || "Message not sent");
+            }
+        });
+    });
+</script>

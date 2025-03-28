@@ -1,67 +1,69 @@
 ﻿@{
-    ViewData["Title"] = "User Chat Page";
+    ViewData["Title"] = "Live Chat";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-<link href="~/css/chat.css" rel="stylesheet" />
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">Live Chat with Admin</div>
+        <div class="card-body" id="chat-box" style="height:400px; overflow-y:auto;"></div>
+        <div class="card-footer">
+            <div class="input-group">
+                <input type="text" id="message-input" class="form-control" placeholder="Type your message...">
+                <button class="btn btn-primary" id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <div class="chat-box-left">
-                <!-- Chat Tabs -->
-                <ul class="nav nav-pills mb-3 nav-justified" id="chat-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="general_chat_tab" data-bs-toggle="pill" href="#general_chat">General</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="group_chat_tab" data-bs-toggle="pill" href="#group_chat">Groups</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="personal_chat_tab" data-bs-toggle="pill" href="#personal_chat">Personal</a>
-                    </li>
-                </ul>
+<script>
+    $(document).ready(function () {
 
-                <!-- Chat Search Box -->
-                <div class="chat-search">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" id="chat-search" class="form-control form-control-sm" placeholder="Search">
-                            <span class="input-group-append">
-                                <button type="button" class="btn btn-soft-primary btn-sm"><i class="fas fa-search"></i></button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+        // Create connection to SignalR Hub
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-                <!-- Chat Content -->
-                <div class="tab-content">
-                    <!-- General Chat -->
-                    <div class="tab-pane fade show active" id="general_chat">
-                        <div class="chat-box">
-                            <p class="text-muted text-center">No messages yet.</p>
-                        </div>
-                    </div>
+        connection.start().then(function () {
+            console.log("SignalR Connected");
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
 
-                    <!-- Group Chat -->
-                    <div class="tab-pane fade" id="group_chat">
-                        <div class="chat-box">
-                            <p class="text-muted text-center">No group chats available.</p>
-                        </div>
-                    </div>
+        // Receive Message
+        connection.on("ReceiveMessage", function (sender, message, isAdminReply, sentOn) {
+            var html = '<div><strong>' + (isAdminReply ? 'Admin' : 'You') + ':</strong> ' + message + '<br/><small>' + sentOn + '</small></div><hr>';
+            $('#chat-box').append(html);
+            $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+        });
 
-                    <!-- Personal Chat -->
-                    <div class="tab-pane fade" id="personal_chat">
-                        <div class="chat-box">
-                            <p class="text-muted text-center">No personal messages yet.</p>
-                        </div>
-                    </div>
-                </div> <!-- End tab-content -->
-            </div> <!-- End chat-box-left -->
-        </div> <!-- End col-12 -->
-    </div> <!-- End row -->
-</div> <!-- End container -->
-<!-- Include Bootstrap -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        // Send Message Button
+        $('#send-btn').click(function () {
+            var msg = $('#message-input').val();
+            if (msg.trim() == "") return;
+
+            $.post('@Url.Action("SendMessage", "Profile")', { message: msg }, function (data) {
+                if (data) {
+                    $('#message-input').val('');
+                } else {
+                    alert("Message not sent");
+                }
+            });
+        });
+
+        // Load old messages
+        function loadMessages() {
+            $.get('@Url.Action("GetAllMessages", "Profile")', function (data) {
+                var html = '';
+                data.forEach(function (msg) {
+                    html += '<div><strong>' + (msg.isAdminReply ? "Admin" : "You") + ':</strong> ' + msg.message + '<br/><small>' + msg.sentOn + '</small></div><hr>';
+                });
+                $('#chat-box').html(html);
+                $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
+            });
+        }
+
+        loadMessages();
+    });
+</script>

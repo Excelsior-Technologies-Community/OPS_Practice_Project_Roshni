@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
+using OPS_Practice_Project.Hubs;
 using OPS_Practice_Project.Models;
 using OPS_Practice_Project.Repository;
 
@@ -14,12 +16,18 @@ namespace OPS_Practice_Project.Controllers
         private readonly UserRepository _userRepository;
         private readonly IWebHostEnvironment _env;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public AdminController(IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor)
+        private readonly LoginRepository _loginHistoryRepository;
+        private readonly ChatRepository _chatRepository;
+        private readonly IHubContext<ChatHub> _hubContext;
+        public AdminController(IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor,UserRepository userRepository, LoginRepository loginHistoryRepository, ChatRepository chatRepository, IHubContext<ChatHub> hubContext)
         {
-            _adminRepository = new AdminRepository();
-            _userRepository = new UserRepository();
+            
             _env = env;
             _httpContextAccessor = httpContextAccessor;
+            _loginHistoryRepository = loginHistoryRepository;
+            _userRepository = userRepository;
+            _chatRepository = chatRepository;
+            _hubContext = hubContext;
         }
         public IActionResult AdminHomePage()
         {
@@ -391,7 +399,53 @@ namespace OPS_Practice_Project.Controllers
 
             return Json(products ?? new List<ProductModel>()); // Ensure it never returns null
         }
+        
+        public IActionResult AdminChat()
+        {
+            var users = _userRepository.GetUserList(); 
+            return View(users);
+        }
 
+        // GET: Load chat history of selected user
+        public IActionResult LoadChat(int userId)
+        {
+            var chat = _chatRepository.GetChatHistory(userId, 4); // Admin ID = 0 (as per your convention)
+            return Json(chat);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendAdminMessage(int userId, string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                return Json(new { success = false, message = "Message cannot be empty" });
+            }
+
+            ChatModel chat = new ChatModel
+            {
+                SenderId = 4,  
+                ReceiverId = userId,
+                Message = message,
+                MessageType = "Text",
+                IsAdminReply = true
+            };
+
+            var result = _chatRepository.InsertChat(chat, "Insert");
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                string timestamp = DateTime.Now.ToString("g");
+
+                
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", 4, userId, message, true, timestamp);
+
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Failed to send message" });
+            }
+        }
 
     }
 }

@@ -55,6 +55,7 @@
                         <i data-feather="home" class="align-self-center menu-icon"></i>
                         <span>Dashboard</span>
                         <span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span>
+
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="/Admin/CategoriesByProducts"><i class="ti-control-record"></i>CategoriesByProducts</a></li>
@@ -62,6 +63,11 @@
                         <li class="nav-item"><a class="nav-link" href="/Admin/UsersData"><i class="ti-control-record"></i>User Table</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Admin/ProductDataTable"><i class="ti-control-record"></i>Product Data</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Admin/CategoriesList"><i class="ti-control-record"></i>Categories Data</a></li>
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Logout", "Home")">
+                                <i data-feather="power" class="align-self-center icon-xs icon-dual mr-1"></i> Logout
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -122,6 +128,7 @@
                         <li class="nav-item"><a class="nav-link" href="/Help/FAQPage"><i class="ti-control-record"></i>Manage Roles & Permissions</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Help/CustomerSupport"><i class="ti-control-record"></i>Activity Logs</a></li>
                         <li class="nav-item"><a class="nav-link" href="/Help/CustomerSupport"><i class="ti-control-record"></i>Backup & Restore</a></li>
+
                     </ul>
                 </li>
 
@@ -318,6 +325,7 @@
 
     <!-- App js -->
     <script src="~/assets/js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 
 
     @await RenderSectionAsync("Scripts", required: false)

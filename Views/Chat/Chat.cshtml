@@ -1,50 +1,67 @@
 ﻿@{
     ViewData["Title"] = "Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link href="~/css/chat.css" rel="stylesheet" />
 
-<div class="chat-container">
-    <!-- Chat Header -->
-    <div class="chat-header">
-        <h2>Chat</h2>
-        <div class="icons">
-            <i class="fas fa-phone"></i>
-            <i class="fas fa-video"></i>
-            <i class="fas fa-trash"></i>
-        </div>
-    </div>
 
-    <!-- Chat Messages -->
-    <div class="chat-messages">
-        <div class="message received">Hello! How are you?</div>
-        <div class="message sent">I'm good! What about you?</div>
-        <div class="message received">I'm doing great. Thank you!</div>
-        <div class="message sent">Awesome! Let's catch up soon.</div>
-    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="chat-box-left">
+                <!-- Chat Tabs -->
+                <ul class="nav nav-pills mb-3 nav-justified" id="chat-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="general_chat_tab" data-bs-toggle="pill" href="#general_chat">General</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="group_chat_tab" data-bs-toggle="pill" href="#group_chat">Groups</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="personal_chat_tab" data-bs-toggle="pill" href="#personal_chat">Personal</a>
+                    </li>
+                </ul>
 
-    <!-- Chat Input -->
-    <div class="chat-input">
-        <input type="text" id="messageInput" placeholder="Type a message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
-</div>
+                <!-- Chat Search Box -->
+                <div class="chat-search">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" id="chat-search" class="form-control form-control-sm" placeholder="Search">
+                            <span class="input-group-append">
+                                <button type="button" class="btn btn-soft-primary btn-sm"><i class="fas fa-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
-<script>
-    function sendMessage() {
-        let inputField = document.getElementById("messageInput");
-        let messageText = inputField.value.trim();
+                <!-- Chat Content -->
+                <div class="tab-content">
+                    <!-- General Chat -->
+                    <div class="tab-pane fade show active" id="general_chat">
+                        <div class="chat-box">
+                            <p class="text-muted text-center">No messages yet.</p>
+                        </div>
+                    </div>
 
-        if (messageText !== "") {
-            let chatMessages = document.querySelector(".chat-messages");
-            let messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", "sent");
-            messageDiv.innerText = messageText;
-            chatMessages.appendChild(messageDiv);
-            inputField.value = "";
+                    <!-- Group Chat -->
+                    <div class="tab-pane fade" id="group_chat">
+                        <div class="chat-box">
+                            <p class="text-muted text-center">No group chats available.</p>
+                        </div>
+                    </div>
 
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-    }
-</script>
+                    <!-- Personal Chat -->
+                    <div class="tab-pane fade" id="personal_chat">
+                        <div class="chat-box">
+                            <p class="text-muted text-center">No personal messages yet.</p>
+                        </div>
+                    </div>
+                </div> <!-- End tab-content -->
+            </div> <!-- End chat-box-left -->
+        </div> <!-- End col-12 -->
+    </div> <!-- End row -->
+</div> <!-- End container -->
+<!-- Include Bootstrap -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

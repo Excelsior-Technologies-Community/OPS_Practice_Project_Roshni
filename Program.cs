@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using OPS_Practice_Project.Hubs;
 using OPS_Practice_Project.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,13 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<LoginRepository>();
+builder.Services.AddScoped<ChatRepository>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddSignalR();  
+
 
 // Add session services
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.IdleTimeout = TimeSpan.FromMinutes(30); 
     options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true; // Essential for GDPR compliance
+    options.Cookie.IsEssential = true; 
 });
 
 // Add HttpContextAccessor
@@ -22,8 +27,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Home/Login";  // Set login page path
-        options.LogoutPath = "/Profile/Logout"; // Set logout page path
+        options.LoginPath = "/Home/Login";  
+        options.LogoutPath = "/Profile/Logout"; 
         //options.AccessDeniedPath = "/Account/AccessDenied"; // Set access denied page path
     });
 
@@ -47,5 +52,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

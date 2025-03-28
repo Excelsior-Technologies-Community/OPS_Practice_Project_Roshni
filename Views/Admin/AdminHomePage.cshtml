@@ -4,5 +4,21 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<link href="~/assets/css/Homepage.css" rel="stylesheet" />
+
 <h1>Welcome Admin Home Page</h1>
 
+<div class="chat-container" onclick="openChatPage()">
+    <div class="chat-button">
+        <img src="https://cdn-icons-png.flaticon.com/512/1370/1370907.png" alt="Chat">
+    </div>
+    <div class="chat-text">How can I help you?</div>
+</div>
+
+<script>
+    function openChatPage() {
+        window.location.href = '/Admin/AdminChat';
+        // Replace with your actual chat page URL
+    }
+
+</script>

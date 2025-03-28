@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 namespace OPS_Practice_Project.Hubs
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessage(string senderId, string message, bool isAdminReply)
+        public async Task SendMessage(int senderId, int receiverId, string message, bool isAdminReply)
         {
-            await Clients.All.SendAsync("ReceiveMessage", senderId, message, isAdminReply, DateTime.Now.ToString("g"));
+            // Broadcast the message to the receiver
+            await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", senderId, receiverId, message, isAdminReply, DateTime.Now.ToString("hh:mm tt"));
 
-            if (!isAdminReply) 
+            // Notify Admin (If the message is from a user)
+            if (!isAdminReply)
             {
-                await Clients.All.SendAsync("NewMessageNotification", senderId);
+                await Clients.All.SendAsync("ShowNotification", senderId);
             }
         }
+
     }
 }

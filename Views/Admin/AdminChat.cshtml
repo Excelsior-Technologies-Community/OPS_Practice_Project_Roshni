@@ -8,10 +8,16 @@
 <style>
     .chat-message.admin {
         text-align: right;
+        background-color: white;
+        padding: 5px;
+        border-radius: 5px;
     }
 
     .chat-message.user {
         text-align: left;
+        background-color: white;
+        padding: 5px;
+        border-radius: 5px;
     }
 
     .user-list {
@@ -21,8 +27,9 @@
     }
 
     .chat-area {
-        height: 500px;
+        height: 400px;
         overflow-y: auto;
+        padding: 10px;
     }
 
     .user-item {
@@ -42,10 +49,24 @@
         background-color: red;
         color: white;
         font-size: 12px;
-        padding: 5px 10px;
         border-radius: 50%;
-        display: none;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
     }
+
+    .notification-icon {
+        width: 20px;
+        height: 20px;
+        display: none; /* Hidden by default */
+    }
+
+
+
+    
 </style>
 
 <div class="container mt-5">
@@ -55,16 +76,25 @@
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">Users</div>
                 <div class="card-body user-list" id="user-list">
-                    @foreach (var user in Model)
-                    {
-                        <div class="user-item mb-2 p-2 border rounded" data-userid="@user.Id" id="user-@user.Id">
-                            <div>
-                                <img src="@user.ProfileImage" width="30" height="30" class="rounded-circle me-2" />
-                                <strong>@user.UserName</strong> <small>(ID: @user.Id)</small>
+                  @foreach (var user in Model)
+                  {
+                            <div class="user-item mb-2 p-2 border rounded d-flex align-items-center justify-content-between" data-userid="@user.Id" id="user-@user.Id" onclick="openChat(@user.Id)">
+                                <!-- User Profile (Left Side) -->
+                                <div class="d-flex align-items-center">
+                                    <img src="@user.ProfileImage" width="30" height="30" class="rounded-circle me-2" />
+                                    <strong>@user.UserName</strong> <small>(ID: @user.Id)</small>
+                                </div>
+
+                                <!-- Notification Badge (Right Side) -->
+                                <span class="notification-badge" id="notify-@user.Id" style="display: none;">●</span>
+                                <!-- Notification Image (Right Side) -->
+                                <img src="~/assets/images/widgets/project2.jpg" id="notify-@user.Id" class="notification-icon" style="display: none; width: 20px; height: 20px;" />
+
                             </div>
-                            <span class="notification-badge" id="notify-@user.Id">New</span>
-                        </div>
-                    }
+                  }
+
+
+                    
                 </div>
             </div>
         </div>
@@ -88,74 +118,81 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    var selectedUserId = 0;
-    const adminId = 4;
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    var adminId = 4;
+    var selectedUserId = null;
 
-    // Initialize SignalR connection
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/chathub")
-        .build();
-
-    connection.start().then(function () {
-        console.log("✅ SignalR Connected");
-    }).catch(function (err) {
-        console.error("❌ SignalR Error:", err.toString());
+    connection.on("ReceiveMessage", function (senderId, message, isAdminReply) {
+        var chatBox = document.getElementById("chat-messages");
+        var msgClass = isAdminReply ? "admin-message" : "user-message";
+        chatBox.innerHTML += `<div class='${msgClass}'>${message}</div>`;
     });
 
-    // Function to append message to chat box
-    function appendMessage(senderId, message, isAdminReply, sentOn) {
-        var alignClass = isAdminReply ? 'text-end' : 'text-start';
-        var senderLabel = isAdminReply ? '<b>Admin:</b>' : '<b>User:</b>';
-
-        $('#chat-box').append(`
-                <div class="${alignClass}">${senderLabel} ${message} <br/><small>${sentOn}</small></div><hr>
-            `);
-        $('#chat-box').scrollTop($('#chat-box')[0].scrollHeight);
-    }
-
-    // Receive messages from SignalR
-    connection.on("ReceiveMessage", function (senderId, receiverId, message, isAdminReply, sentOn) {
-        if (senderId == selectedUserId || receiverId == selectedUserId) {
-            appendMessage(senderId, message, isAdminReply, sentOn);
-        } else {
-            if (!isAdminReply) {
-                $('#notify-' + senderId).show();
-                moveUserToTop(senderId);
-            }
+    connection.on("ShowNotification", function (senderId) {
+        if (selectedUserId !== senderId) {
+            document.getElementById("notify-" + senderId).style.display = "inline-block";
+            document.getElementById("notify-img-" + senderId).style.display = "inline-block";
         }
     });
 
-    // Load chat history when clicking a user
+    function openChat(userId) {
+        selectedUserId = userId;
+        document.getElementById("notify-" + userId).style.display = "none";
+        document.getElementById("notify-img-" + userId).style.display = "none";
+        loadChat(userId);
+    }
+
+    function sendMessage() {
+        var msg = document.getElementById("messageInput").value;
+        if (msg.trim() !== "" && selectedUserId) {
+            connection.invoke("SendMessage", adminId, selectedUserId, msg, true)
+                .catch(function (err) {
+                    return console.error(err.toString());
+                });
+            document.getElementById("messageInput").value = "";
+        }
+    }
+
+    connection.start().catch(err => console.error(err.toString()));
+
+
+    // Handle user click and remove notification
     $(document).on('click', '.user-item', function () {
         selectedUserId = $(this).data('userid');
         $('#chat-with').html("- User ID: " + selectedUserId);
         $('#message-input').prop('disabled', false);
         $('#send-btn').prop('disabled', false);
 
-        $('#notify-' + selectedUserId).hide(); // Hide notification badge
+        // Hide notification when admin selects the user
+        $('#notify-' + selectedUserId).hide();
 
+        // Load previous chat messages
         loadChat(selectedUserId);
     });
 
-    // Move user to top when they send a message
-    function moveUserToTop(userId) {
-        var userDiv = $('#user-' + userId);
-        $('#user-list').prepend(userDiv);
-    }
 
-    // Load chat history via AJAX
     function loadChat(userId) {
-        $('#chat-box').html('<em>Loading...</em>');
-
-        $.get('/Admin/LoadChat', { userId: userId }, function (res) {
-            $('#chat-box').html('');
-            res.forEach(function (msg) {
-                appendMessage(msg.senderId, msg.message, msg.isAdminReply, msg.sentOn);
-            });
+        $.ajax({
+            url: '/Admin/LoadChat',
+            type: 'GET',
+            data: { userId: userId },
+            success: function (response) {
+                if (response.length > 0) {
+                    $('#chat-box').empty();
+                    response.forEach(function (chat) {
+                        var messageClass = chat.isAdminReply ? "chat-message admin" : "chat-message user";
+                        $("#chat-box").append('<div class="' + messageClass + '"><strong>' + (chat.isAdminReply ? "Admin" : "User") + ':</strong> ' + chat.message + '</div>');
+                    });
+                } else {
+                    $("#chat-box").html('<p class="text-center">No chat history found.</p>');
+                }
+            },
+            error: function (error) {
+                console.log("Error loading chat:", error);
+            }
         });
     }
 
-    // Send message from admin
     $('#send-btn').click(function () {
         var msg = $('#message-input').val();
         if (msg.trim() === "" || selectedUserId === 0) return;

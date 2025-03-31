@@ -1637,12 +1637,28 @@
       "PackagePath": "staticwebassets\\plugins\\x-editable\\js\\bootstrap-editable.min.js"
     },
     {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\0025292d-fbe8-4596-9a9b-dc4bd863054e_Cardomon.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\0025292d-fbe8-4596-9a9b-dc4bd863054e_Cardomon.jpeg"
+    },
+    {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\03d2078c-5da6-4d99-9590-d3f441cabbf0_Brahmi.jpg",
       "PackagePath": "staticwebassets\\uploads\\03d2078c-5da6-4d99-9590-d3f441cabbf0_Brahmi.jpg"
     },
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg",
       "PackagePath": "staticwebassets\\uploads\\04e115fa-d6bd-4563-9524-2d90bb545a6d_Belladonna.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\080c5b7c-ab4b-4145-a4f6-3dd30a891be9_Cardomon.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\080c5b7c-ab4b-4145-a4f6-3dd30a891be9_Cardomon.jpeg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\2095708a-4ef1-495c-96f5-1d67be8b68e1_Basil, Holy (Tulsi).jpg",
+      "PackagePath": "staticwebassets\\uploads\\2095708a-4ef1-495c-96f5-1d67be8b68e1_Basil, Holy (Tulsi).jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\2bd51d8c-a5ad-4888-a315-337bc8c4afb9_Basil, African.jpg",
+      "PackagePath": "staticwebassets\\uploads\\2bd51d8c-a5ad-4888-a315-337bc8c4afb9_Basil, African.jpg"
     },
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\3e9c155f-3e02-407e-9793-4224255c23e2_Basil, Indian Subja [Barbari Tulsi].jpg",
@@ -1653,8 +1669,20 @@
       "PackagePath": "staticwebassets\\uploads\\4be7c461-3315-4c77-9830-0db36a9897cd_Basil, Tree.jpg"
     },
     {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\513d136b-fcb9-4b7e-95cd-4e32bca6d50f_Basil, Tree.jpg",
+      "PackagePath": "staticwebassets\\uploads\\513d136b-fcb9-4b7e-95cd-4e32bca6d50f_Basil, Tree.jpg"
+    },
+    {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\5218cfc1-dc45-4553-89af-92bec57ada70_Blood Flower.jpg",
       "PackagePath": "staticwebassets\\uploads\\5218cfc1-dc45-4553-89af-92bec57ada70_Blood Flower.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\62c4b5d9-cc6c-4876-be5e-543822003327_Cardomon.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\62c4b5d9-cc6c-4876-be5e-543822003327_Cardomon.jpeg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\7bd636a6-ebb0-4942-9f88-b7414d9bed42_Basil, Tree.jpg",
+      "PackagePath": "staticwebassets\\uploads\\7bd636a6-ebb0-4942-9f88-b7414d9bed42_Basil, Tree.jpg"
     },
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\92145928-27df-41ca-8e35-c36cd09d420d_Brahmi.jpg",
@@ -1819,6 +1847,34 @@
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\Products\\women-white_shirt.jpg",
       "PackagePath": "staticwebassets\\uploads\\Products\\women-white_shirt.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\a290a1bc-76dc-4a74-9122-97684dcc0fc6_Basil, Tree.jpg",
+      "PackagePath": "staticwebassets\\uploads\\a290a1bc-76dc-4a74-9122-97684dcc0fc6_Basil, Tree.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\c34cf78e-5f85-4eba-aca2-b1d19641a7a6_Basil, African.jpg",
+      "PackagePath": "staticwebassets\\uploads\\c34cf78e-5f85-4eba-aca2-b1d19641a7a6_Basil, African.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\c49b08ad-5041-4db2-bd55-338f86291f8c_Datura Hindu.jpg",
+      "PackagePath": "staticwebassets\\uploads\\c49b08ad-5041-4db2-bd55-338f86291f8c_Datura Hindu.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\c71f4d12-9d3d-421d-a765-154399380546_Basil, Kilimanjaro.jpg",
+      "PackagePath": "staticwebassets\\uploads\\c71f4d12-9d3d-421d-a765-154399380546_Basil, Kilimanjaro.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\cec923ec-6927-4fb5-893d-c3f109ed1c1c_Patchouli.jpg",
+      "PackagePath": "staticwebassets\\uploads\\cec923ec-6927-4fb5-893d-c3f109ed1c1c_Patchouli.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\de6f8a26-d31a-40cd-bbce-43544bbfe7be_1st.jpg",
+      "PackagePath": "staticwebassets\\uploads\\de6f8a26-d31a-40cd-bbce-43544bbfe7be_1st.jpg"
+    },
+    {
+      "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\e9a67bce-9c11-4635-bfe2-75012475ca1d_Datura Hindu.jpg",
+      "PackagePath": "staticwebassets\\uploads\\e9a67bce-9c11-4635-bfe2-75012475ca1d_Datura Hindu.jpg"
     },
     {
       "Id": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\uploads\\ec72f104-2341-481b-932e-81f18452ba50_Henna.jpg",

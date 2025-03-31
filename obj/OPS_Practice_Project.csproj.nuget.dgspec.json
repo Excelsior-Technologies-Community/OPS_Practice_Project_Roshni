@@ -66,6 +66,10 @@
               "target": "Package",
               "version": "[8.0.7, )"
             },
+            "SweetAlert2": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "reCAPTCHA.AspNetCore": {
               "target": "Package",
               "version": "[3.0.10, )"

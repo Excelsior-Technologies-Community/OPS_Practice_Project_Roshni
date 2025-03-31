@@ -5,9 +5,24 @@
 }
 
 <link href="~/css/login.css" rel="stylesheet" />
-@if (ViewBag.Error != null)
+@* @if (ViewBag.Error != null)
 {
     <div class="alert alert-danger">@ViewBag.Error</div>
+}
+ *@
+
+@if (TempData["Success"] != null)
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '@TempData["Success"]',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+    </script>
 }
 
 <div class="login-container">

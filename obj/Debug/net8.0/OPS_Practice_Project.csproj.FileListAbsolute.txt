@@ -275,3 +275,4 @@ F:\Company Work\OPS_Practice_Project\obj\Debug\net8.0\OPS_Practice_Project.MvcAp
 F:\Company Work\OPS_Practice_Project\obj\Debug\net8.0\OPS_Practice_Project.sourcelink.json
 F:\Company Work\OPS_Practice_Project\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 F:\Company Work\OPS_Practice_Project\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+F:\Company Work\OPS_Practice_Project\bin\Debug\net8.0\SweetAlert2.dll

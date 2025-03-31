@@ -102,7 +102,8 @@ namespace OPS_Practice_Project.Controllers
 
                 _registerRepository.InsertUserS(model?.Register, "Insert");
                 GenerateCaptcha();
-                return RedirectToAction("LoginPage", "Home");
+                TempData["Success"] = "Registration Successful!";
+                return RedirectToAction("RegisterPage", "Home");
             }
             catch (Exception ex)
             {
@@ -239,10 +240,12 @@ namespace OPS_Practice_Project.Controllers
 
                 if (userTypeId == 1)
                 {
+                    TempData["Success"] = "Admin Login Successful!";
                     return RedirectToAction("AdminHomePage", "Admin");
                 }
                 else if (userTypeId == 2)
                 {
+                    TempData["Success"] = "User Login Successful!";
                     return RedirectToAction("ProfileHome", "Profile");
                 }
             }

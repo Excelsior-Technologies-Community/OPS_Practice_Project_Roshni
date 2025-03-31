@@ -69,3 +69,17 @@ a {
     a:hover {
         text-decoration: underline;
     }
+
+swal2-popup {
+    font-size: 16px !important;
+    border-radius: 10px;
+}
+
+.swal2-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.swal2-confirm {
+    background-color: #6a11cb !important;
+}

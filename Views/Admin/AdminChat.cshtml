@@ -76,25 +76,24 @@
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">Users</div>
                 <div class="card-body user-list" id="user-list">
-                  @foreach (var user in Model)
-                  {
-                            <div class="user-item mb-2 p-2 border rounded d-flex align-items-center justify-content-between" data-userid="@user.Id" id="user-@user.Id" onclick="openChat(@user.Id)">
-                                <!-- User Profile (Left Side) -->
-                                <div class="d-flex align-items-center">
-                                    <img src="@user.ProfileImage" width="30" height="30" class="rounded-circle me-2" />
-                                    <strong>@user.UserName</strong> <small>(ID: @user.Id)</small>
-                                </div>
+                    @foreach (var user in Model)
+                    {
+                        <div class="user-item mb-2 p-2 border rounded d-flex align-items-center justify-content-between"
+                             data-userid="@user.Id" id="user-@user.Id" onclick="openChat(@user.Id)">
 
-                                <!-- Notification Badge (Right Side) -->
-                                <span class="notification-badge" id="notify-@user.Id" style="display: none;">●</span>
-                                <!-- Notification Image (Right Side) -->
-                                <img src="~/assets/images/widgets/project2.jpg" id="notify-@user.Id" class="notification-icon" style="display: none; width: 20px; height: 20px;" />
-
+                            <div class="d-flex align-items-center">
+                                <img src="@user.ProfileImage" width="30" height="30" class="rounded-circle me-2" />
+                                <strong>@user.UserName</strong> <small>(ID: @user.Id)</small>
                             </div>
-                  }
 
+                            <!-- Unread message badge -->
+                            @if (user.UnreadCount > 0)
+                            {
+                                <span class="notification-badge" id="notify-@user.Id">@user.UnreadCount</span>
+                            }
+                        </div>
+                    }
 
-                    
                 </div>
             </div>
         </div>
@@ -123,53 +122,45 @@
     var selectedUserId = null;
 
     connection.on("ReceiveMessage", function (senderId, message, isAdminReply) {
-        var chatBox = document.getElementById("chat-messages");
-        var msgClass = isAdminReply ? "admin-message" : "user-message";
-        chatBox.innerHTML += `<div class='${msgClass}'>${message}</div>`;
+        if (selectedUserId == senderId) {
+            // Append message if chat is open
+            var msgClass = isAdminReply ? "chat-message admin" : "chat-message user";
+            $("#chat-box").append(`<div class='${msgClass}'><strong>${isAdminReply ? "Admin" : "User"}:</strong> ${message}</div>`);
+        } else {
+            // Show unread message notification
+            let badge = $("#notify-" + senderId);
+            let count = parseInt(badge.text() || 0) + 1;
+            badge.text(count).show();
+        }
     });
 
-    connection.on("ShowNotification", function (senderId) {
-        if (selectedUserId !== senderId) {
-            document.getElementById("notify-" + senderId).style.display = "inline-block";
-            document.getElementById("notify-img-" + senderId).style.display = "inline-block";
+    connection.on("UpdateUnreadMessages", function (unreadCounts) {
+        $(".notification-badge").hide(); // Hide all badges initially
+
+        // Update notification count for each user
+        for (const userId in unreadCounts) {
+            if (unreadCounts[userId] > 0) {
+                $("#notify-" + userId).text(unreadCounts[userId]).show();
+            }
         }
     });
 
     function openChat(userId) {
         selectedUserId = userId;
-        document.getElementById("notify-" + userId).style.display = "none";
-        document.getElementById("notify-img-" + userId).style.display = "none";
+        $("#chat-with").html("- User ID: " + selectedUserId);
+        $("#message-input").prop("disabled", false);
+        $("#send-btn").prop("disabled", false);
+
+        // Hide notification badge for the opened chat
+        $("#notify-" + userId).hide().text('');
+
+        // Mark messages as read in the database
+        $.post('/Admin/MarkMessagesAsRead', { userId: userId }, function () {
+            console.log("Messages marked as read for User ID: " + userId);
+        });
+
         loadChat(userId);
     }
-
-    function sendMessage() {
-        var msg = document.getElementById("messageInput").value;
-        if (msg.trim() !== "" && selectedUserId) {
-            connection.invoke("SendMessage", adminId, selectedUserId, msg, true)
-                .catch(function (err) {
-                    return console.error(err.toString());
-                });
-            document.getElementById("messageInput").value = "";
-        }
-    }
-
-    connection.start().catch(err => console.error(err.toString()));
-
-
-    // Handle user click and remove notification
-    $(document).on('click', '.user-item', function () {
-        selectedUserId = $(this).data('userid');
-        $('#chat-with').html("- User ID: " + selectedUserId);
-        $('#message-input').prop('disabled', false);
-        $('#send-btn').prop('disabled', false);
-
-        // Hide notification when admin selects the user
-        $('#notify-' + selectedUserId).hide();
-
-        // Load previous chat messages
-        loadChat(selectedUserId);
-    });
-
 
     function loadChat(userId) {
         $.ajax({
@@ -177,11 +168,11 @@
             type: 'GET',
             data: { userId: userId },
             success: function (response) {
+                $("#chat-box").empty();
                 if (response.length > 0) {
-                    $('#chat-box').empty();
                     response.forEach(function (chat) {
                         var messageClass = chat.isAdminReply ? "chat-message admin" : "chat-message user";
-                        $("#chat-box").append('<div class="' + messageClass + '"><strong>' + (chat.isAdminReply ? "Admin" : "User") + ':</strong> ' + chat.message + '</div>');
+                        $("#chat-box").append(`<div class="${messageClass}"><strong>${chat.isAdminReply ? "Admin" : "User"}:</strong> ${chat.message}</div>`);
                     });
                 } else {
                     $("#chat-box").html('<p class="text-center">No chat history found.</p>');
@@ -193,17 +184,20 @@
         });
     }
 
-    $('#send-btn').click(function () {
-        var msg = $('#message-input').val();
-        if (msg.trim() === "" || selectedUserId === 0) return;
+    $("#send-btn").click(function () {
+        var msg = $("#message-input").val().trim();
+        if (msg === "" || selectedUserId === null) return;
 
         $.post('/Admin/SendAdminMessage', { userId: selectedUserId, message: msg }, function (res) {
             if (res.success) {
-                connection.invoke("SendMessage", adminId, selectedUserId, msg, true, new Date().toLocaleString());
-                $('#message-input').val('');
+                connection.invoke("SendMessage", adminId, selectedUserId, msg, true)
+                    .catch(err => console.error(err.toString()));
+                $("#message-input").val('');
             } else {
                 alert(res.message || "Message not sent");
             }
         });
     });
+
+    connection.start().catch(err => console.error(err.toString()));
 </script>

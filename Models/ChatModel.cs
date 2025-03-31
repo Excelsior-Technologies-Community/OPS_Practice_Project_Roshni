@@ -8,6 +8,7 @@
         public string Message { get; set; }
         public string MessageType { get; set; }
         public bool? IsAdminReply { get; set; }
+        public bool? IsRead { get; set; }    
         public DateTime? SentOn { get; set; }
     }
 }

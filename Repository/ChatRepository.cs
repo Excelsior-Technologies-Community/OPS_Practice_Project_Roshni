@@ -26,6 +26,7 @@ namespace OPS_Practice_Project.Repository
                 cmd.Parameters.AddWithValue("@Message", model.Message);
                 cmd.Parameters.AddWithValue("@MessageType", model.MessageType);
                 cmd.Parameters.AddWithValue("@IsAdminReply", model.IsAdminReply ?? false);
+                cmd.Parameters.AddWithValue("@IsRead", model.IsRead ?? false);
                 cmd.Parameters.AddWithValue("@MessageId", DBNull.Value);
 
                 return cmd.ExecuteScalar()?.ToString();
@@ -48,6 +49,7 @@ namespace OPS_Practice_Project.Repository
                 cmd.Parameters.AddWithValue("@Message", model.Message);
                 cmd.Parameters.AddWithValue("@MessageType", model.MessageType);
                 cmd.Parameters.AddWithValue("@IsAdminReply", model.IsAdminReply ?? false);
+                cmd.Parameters.AddWithValue("@IsRead", model.IsRead ?? (object)DBNull.Value);
 
                 return cmd.ExecuteScalar()?.ToString();
             }
@@ -101,6 +103,7 @@ namespace OPS_Practice_Project.Repository
                         Message = reader["Message"].ToString(),
                         MessageType = reader["MessageType"].ToString(),
                         IsAdminReply = reader["IsAdminReply"] != DBNull.Value ? Convert.ToBoolean(reader["IsAdminReply"]) : (bool?)null,
+                        IsRead = reader["IsRead"] != DBNull.Value ? Convert.ToBoolean(reader["IsRead"]) : (bool?)null,
                         SentOn = reader["SentOn"] != DBNull.Value ? Convert.ToDateTime(reader["SentOn"]) : (DateTime?)null
                     });
                 }
@@ -137,6 +140,83 @@ namespace OPS_Practice_Project.Repository
             }
 
             return messages;
+        }
+        public Dictionary<int, int> GetUnreadMessageCounts()
+        {
+            var unreadCounts = new Dictionary<int, int>();
+
+            string query = @"
+        SELECT ReceiverId, COUNT(*) AS UnreadCount 
+        FROM tbl_ChatMessages 
+        WHERE IsRead = 0 AND IsAdminReply = 0
+        GROUP BY ReceiverId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int userId = Convert.ToInt32(reader["ReceiverId"]);
+                            int count = Convert.ToInt32(reader["UnreadCount"]);
+                            unreadCounts[userId] = count;
+                        }
+                    }
+                }
+            }
+
+            return unreadCounts;
+        }
+        public Dictionary<int, int> GetUnreadMessageCountsForAdmin(int adminId)
+        {
+            var unreadCounts = new Dictionary<int, int>();
+
+            string query = @"
+            SELECT SenderId, COUNT(*) AS UnreadCount 
+            FROM tbl_ChatMessages 
+            WHERE ReceiverId = @AdminId AND IsRead = 0 AND IsAdminReply = 0
+            GROUP BY SenderId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@AdminId", adminId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int userId = Convert.ToInt32(reader["SenderId"]);
+                            int count = Convert.ToInt32(reader["UnreadCount"]);
+                            unreadCounts[userId] = count;
+                        }
+                    }
+                }
+            }
+
+            return unreadCounts;
+        }
+
+        public void MarkMessagesAsRead(int senderId, int receiverId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand(@"
+            UPDATE tbl_ChatMessages 
+            SET IsRead = 1 
+            WHERE SenderId = @SenderId AND ReceiverId = @ReceiverId AND IsRead = 0", connection);
+
+                cmd.Parameters.AddWithValue("@SenderId", senderId);
+                cmd.Parameters.AddWithValue("@ReceiverId", receiverId);
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
     }

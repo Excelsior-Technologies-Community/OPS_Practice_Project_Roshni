@@ -3,48 +3,16 @@
   "WorkspaceRootPath": "F:\\Company Work\\OPS_Practice_Project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:controllers\\profilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\views\\admin\\adminchat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:views\\admin\\adminchat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\views\\home\\registerpage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:views\\home\\registerpage.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\repository\\chatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:repository\\chatrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\models\\chatmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:models\\chatmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5A24F6E4-EA43-4AEB-BE10-773E543C6D86}|OPS_Practice_Project.csproj|f:\\company work\\ops_practice_project\\views\\chat\\chat.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -74,32 +42,19 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAAADsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T09:21:50.923Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ChatHub.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Hubs\\ChatHub.cs",
-              "RelativeDocumentMoniker": "Hubs\\ChatHub.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Hubs\\ChatHub.cs",
-              "RelativeToolTip": "Hubs\\ChatHub.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Title": "ChatRepository.cs",
+              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Repository\\ChatRepository.cs",
+              "RelativeDocumentMoniker": "Repository\\ChatRepository.cs",
+              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Repository\\ChatRepository.cs",
+              "RelativeToolTip": "Repository\\ChatRepository.cs",
+              "ViewState": "AgIAAKwAAAAAAAAAAAAuwLUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-28T07:09:06.171Z",
+              "WhenOpened": "2025-03-31T07:20:47.586Z",
               "EditorCaption": ""
             },
             {
@@ -110,7 +65,7 @@
               "RelativeDocumentMoniker": "Views\\Admin\\AdminChat.cshtml",
               "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Views\\Admin\\AdminChat.cshtml",
               "RelativeToolTip": "Views\\Admin\\AdminChat.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAAAJIAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAAALYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-27T10:57:36.249Z",
               "EditorCaption": ""
@@ -118,103 +73,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ProfileController.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Controllers\\ProfileController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProfileController.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Controllers\\ProfileController.cs",
-              "RelativeToolTip": "Controllers\\ProfileController.cs",
-              "ViewState": "AgIAANwAAAAAAAAAAAAIwMQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-26T12:25:36.377Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RegisterPage.cshtml",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Views\\Home\\RegisterPage.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\RegisterPage.cshtml",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Views\\Home\\RegisterPage.cshtml",
-              "RelativeToolTip": "Views\\Home\\RegisterPage.cshtml",
-              "ViewState": "AgIAAOoAAAAAAAAAAAAAAGMBAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-24T07:04:52.421Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "AdminController.cs",
               "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Controllers\\AdminController.cs",
               "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
               "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Controllers\\AdminController.cs",
               "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AgIAAKMBAAAAAAAAAAAcwLIBAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAI4BAAAAAAAAAAAuwKEBAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T11:37:58.965Z"
+              "WhenOpened": "2025-03-27T11:37:58.965Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "UserModel.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Models\\UserModel.cs",
-              "RelativeDocumentMoniker": "Models\\UserModel.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Models\\UserModel.cs",
-              "RelativeToolTip": "Models\\UserModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T06:29:20.465Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Repository\\UserRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\UserRepository.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Repository\\UserRepository.cs",
-              "RelativeToolTip": "Repository\\UserRepository.cs",
-              "ViewState": "AgIAADgBAAAAAAAAAAAuwEABAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T12:07:52.31Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ChatRepository.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Repository\\ChatRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\ChatRepository.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Repository\\ChatRepository.cs",
-              "RelativeToolTip": "Repository\\ChatRepository.cs",
-              "ViewState": "AgIAAGwAAAAAAAAAAAAAAG4AAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T11:58:28.521Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ChatModel.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Models\\ChatModel.cs",
-              "RelativeDocumentMoniker": "Models\\ChatModel.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Models\\ChatModel.cs",
-              "RelativeToolTip": "Models\\ChatModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-27T06:54:42.331Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "F:\\Company Work\\OPS_Practice_Project\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAABYBAAAAAAAAAIBJwCcBAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-11T06:15:40.782Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 3,
               "Title": "Chat.cshtml",
               "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Views\\Chat\\Chat.cshtml",
               "RelativeDocumentMoniker": "Views\\Chat\\Chat.cshtml",
@@ -226,7 +97,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 4,
               "Title": "Chat.css",
               "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\css\\Chat.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\Chat.css",
@@ -238,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 5,
               "Title": "ChatController.cs",
               "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Views\\Chat\\ChatController.cs",
               "RelativeDocumentMoniker": "Views\\Chat\\ChatController.cs",
@@ -250,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 6,
               "Title": "UsersData.cshtml",
               "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\Views\\Admin\\UsersData.cshtml",
               "RelativeDocumentMoniker": "Views\\Admin\\UsersData.cshtml",
@@ -262,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 7,
               "Title": "Register.css",
               "DocumentMoniker": "F:\\Company Work\\OPS_Practice_Project\\wwwroot\\css\\Register.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\Register.css",

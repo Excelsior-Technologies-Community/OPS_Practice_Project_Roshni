@@ -72,5 +72,7 @@ namespace OPS_Practice_Project.Models
         public string? StateName { get; set; }
         public string? CityName { get; set; }
         public string? UserTypeName { get; set; }
+
+        public int UnreadCount { get; set; }
     }
 }

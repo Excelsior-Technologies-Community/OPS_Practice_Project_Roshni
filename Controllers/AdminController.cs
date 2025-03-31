@@ -399,53 +399,90 @@ namespace OPS_Practice_Project.Controllers
 
             return Json(products ?? new List<ProductModel>()); // Ensure it never returns null
         }
-        
-        public IActionResult AdminChat()
-        {
-            var users = _userRepository.GetUserList(); 
-            return View(users);
-        }
 
-        // GET: Load chat history of selected user
-        public IActionResult LoadChat(int userId)
-        {
-            var chat = _chatRepository.GetChatHistory(userId, 4); // Admin ID = 0 (as per your convention)
-            return Json(chat);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SendAdminMessage(int userId, string message)
-        {
-            if (string.IsNullOrWhiteSpace(message))
+            public IActionResult AdminChat()
             {
-                return Json(new { success = false, message = "Message cannot be empty" });
+                var users = _userRepository.GetUserList();
+
+                // Get unread message counts for all users
+                var unreadCounts = _chatRepository.GetUnreadMessageCountsForAdmin(4);
+
+                // Attach unread count to each user
+                var userList = users.Select(user => new UserModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    ProfileImage = string.IsNullOrEmpty(user.ProfileImage) ? "/uploads/default-profile.png" : user.ProfileImage,
+                    UnreadCount = unreadCounts.TryGetValue((int)user.Id, out int count) ? count : 0
+                })
+                .OrderByDescending(u => u.UnreadCount) // Sort users by unread messages
+                .ToList();
+
+                return View(userList);
             }
 
-            ChatModel chat = new ChatModel
+            public IActionResult LoadChat(int userId)
             {
-                SenderId = 4,  
-                ReceiverId = userId,
-                Message = message,
-                MessageType = "Text",
-                IsAdminReply = true
-            };
+                _chatRepository.MarkMessagesAsRead(userId, 4); // Admin ID = 4
 
-            var result = _chatRepository.InsertChat(chat, "Insert");
+                var chat = _chatRepository.GetChatHistory(userId, 4);
+                return Json(chat);
+            }
 
-            if (!string.IsNullOrEmpty(result))
+            [HttpPost]
+            public IActionResult MarkMessagesAsRead(int userId)
             {
-                string timestamp = DateTime.Now.ToString("g");
-
-                
-                await _hubContext.Clients.All.SendAsync("ReceiveMessage", 4, userId, message, true, timestamp);
-
+                _chatRepository.MarkMessagesAsRead(userId, 4); // Admin ID = 4
                 return Json(new { success = true });
             }
-            else
+
+            [HttpPost]
+            public async Task<IActionResult> SendAdminMessage(int userId, string message)
             {
-                return Json(new { success = false, message = "Failed to send message" });
+                if (string.IsNullOrWhiteSpace(message))
+                {
+                    return Json(new { success = false, message = "Message cannot be empty" });
+                }
+
+                ChatModel chat = new ChatModel
+                {
+                    SenderId = 4, // Admin ID
+                    ReceiverId = userId,
+                    Message = message,
+                    MessageType = "Text",
+                    IsAdminReply = true,
+                    IsRead = false,
+                    SentOn = DateTime.Now
+                };
+
+                var result = _chatRepository.InsertChat(chat, "Insert");
+
+                if (!string.IsNullOrEmpty(result))
+                {
+                    string timestamp = DateTime.Now.ToString("g");
+
+                    // Send message to the specific user
+                    await _hubContext.Clients.User(userId.ToString())
+                        .SendAsync("ReceiveMessage", 4, message, true, timestamp);
+
+                    // Send updated unread count to all clients
+                    var unreadCounts = _chatRepository.GetUnreadMessageCounts();
+                    await _hubContext.Clients.All.SendAsync("UpdateUnreadMessages", unreadCounts);
+
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Failed to send message" });
+                }
             }
-        }
+
+            public IActionResult GetUserAllUnReadMessageCount()
+            {
+                var unreadCounts = _chatRepository.GetUnreadMessageCounts();
+                return Json(unreadCounts);
+            }
+        
 
     }
 }
